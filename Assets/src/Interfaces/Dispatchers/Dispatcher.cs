@@ -7,6 +7,7 @@ using BattleForBetelgeuse.Stores;
 using BattleForBetelgeuse.GUI.Hex;
 using BattleForBetelgeuse.Actions.DispatcherActions;
 using UnityEngine;
+using BattleForBetelgeuse.GUI.Board;
 
 namespace BattleForBetelgeuse.Dispatching {
 
@@ -66,20 +67,20 @@ namespace BattleForBetelgeuse.Dispatching {
       if(dispatchingAction is PauseDispatchingAction) {
         PauseDispatching();
       } else if(dispatchingAction is UnpauseDispatchingAction) {
-        UnpauseDispatching();
         delayedActions.Sort();
         delayedActions.ForEach(action => actions.Add(action));
         delayedActions = new List<Dispatchable>();
+        UnpauseDispatching();
         startDispatching();
       }
     }
 
     private void dispatch() {
-      try {
-        while(actions.Count > 0) {
-          var action = actions.First();  
-          actions.Remove(action);
-          if(action is ThrottledAction) {
+      while(actions.Count > 0) {
+        var action = actions.First();  
+        actions.Remove(action);
+        try {
+          if(ThrottledAction.IsThrottled(action)) {
             var actionsCopy = new Dispatchable[actions.Count];
             actions.CopyTo(actionsCopy);
             foreach(var a in actionsCopy) {
@@ -89,15 +90,17 @@ namespace BattleForBetelgeuse.Dispatching {
               }
             }
           }
+
           if(!paused || (action is UnpausableAction)) {
             stores.ForEach(store => store.Update(action));
           } else {
             delayedActions.Add(action);
           }
-        }
-      } catch(System.Exception e) {
-        Debug.LogError("Dispatcher crashed: " + e.Message);
-      }
+        } catch(System.Exception e) {
+          Debug.LogError("Dispatcher crashed: " + e.Message);
+          continue;
+        }  
+      }     
     }
   }
 }

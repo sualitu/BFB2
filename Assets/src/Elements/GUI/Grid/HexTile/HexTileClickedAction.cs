@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace BattleForBetelgeuse.GUI.Hex {
 
-  public class HexTileClickedAction : ClickAction {
+  public class HexTileClickedAction : UnpausableAction {
 
     HexCoordinate hexCoord;
 
@@ -18,8 +18,7 @@ namespace BattleForBetelgeuse.GUI.Hex {
       }
     }
 
-    public HexTileClickedAction(Click click, HexCoordinate coordinate) : base(click) {
-
+    public HexTileClickedAction(HexCoordinate coordinate) : base() {
       Coordinate = coordinate;
     }    
   }

@@ -4,6 +4,7 @@ namespace BattleForBetelgeuse.GUI.Board {
 
   public class BoardUpdateAction : ThrottledAction {
     BoardStatus boardStatus;
+
     public BoardStatus BoardStatus { 
       get {
         _ReadyToGo.WaitOne();
@@ -13,6 +14,10 @@ namespace BattleForBetelgeuse.GUI.Board {
         _ReadyToGo.Set();
         boardStatus = value;
       }
+    }
+
+    internal override bool _isThrottled() {
+      return boardStatus.CurrentSelection != null && boardStatus.PreviousSelection != null;
     }
 
     public BoardUpdateAction(BoardStatus boardStatus) : base() {

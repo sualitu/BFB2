@@ -36,12 +36,7 @@ namespace BattleForBetelgeuse.Stores {
 
     public override void Update(Dispatchable action) {
       if(action is RandomColorOnClickAction) {
-        var clickAction = (RandomColorOnClickAction)action;
-        if(clickAction.Click.Type == ClickType.LEFTCLICK) {
-          color = new Color((float)rnd.NextDouble(), (float)rnd.NextDouble(), (float)rnd.NextDouble());
-        } else {
-          color = Color.black;
-        }
+        color = new Color((float)rnd.NextDouble(), (float)rnd.NextDouble(), (float)rnd.NextDouble());
         Publish();
       }
     }

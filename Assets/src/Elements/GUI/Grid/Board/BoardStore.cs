@@ -48,10 +48,10 @@ namespace BattleForBetelgeuse.GUI.Board {
     public override void Update(Dispatchable action) {
       if(action is HexTileClickedAction) {
         var hexTileClickedAction = (HexTileClickedAction)action;
-        var x = hexTileClickedAction.Coordinate;
-        UpdateStatus(x);
-        //Debug.Log(x);
+        UpdateStatus(hexTileClickedAction.Coordinate);
         Publish();
+      } else if(action is RightClickAction) {
+        Deselect();
       }
     }
 

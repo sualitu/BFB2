@@ -16,7 +16,7 @@ namespace BattleForBetelgeuse.GUI.Hex {
     }
 
     public override void LeftClicked() {
-      new HexTileClickedAction(new Click(ClickType.LEFTCLICK), Coordinate);
+      new HexTileClickedAction(Coordinate);
     }
 
    public void CheckSelected(BoardStatus status) {

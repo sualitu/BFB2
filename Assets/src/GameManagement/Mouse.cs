@@ -54,7 +54,7 @@ namespace BattleForBetelgeuse {
         }
         break;
       case ClickType.RIGHTCLICK:
-        BoardStore.Instance.Deselect();
+        new RightClickAction();
         break;
       }
 

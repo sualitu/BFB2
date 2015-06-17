@@ -1,7 +1,7 @@
 namespace BattleForBetelgeuse.Actions {
 
-  public class RandomColorOnClickAction : ClickAction {
-    public RandomColorOnClickAction(Click click) : base(click) {
+  public class RandomColorOnClickAction : UnpausableAction {
+    public RandomColorOnClickAction() : base() {
     }
   }
 }

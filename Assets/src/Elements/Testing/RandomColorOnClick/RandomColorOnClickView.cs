@@ -18,11 +18,11 @@ namespace BattleForBetelgeuse.View.Clickable {
     }
 
     public override void LeftClicked() {
-      new RandomColorOnClickAction(new Click(ClickType.LEFTCLICK));
+      new RandomColorOnClickAction();
     }
 
     public override void RightClicked() {
-      new RandomColorOnClickAction(new Click(ClickType.RIGHTCLICK));
+      new RandomColorOnClickAction();
     }
   }
 }
