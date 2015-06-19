@@ -33,10 +33,12 @@ namespace BattleForBetelgeuse.GameElements.Unit {
     public void Move(List<UnitChange> changes) {
       foreach(var change in changes) {
         if(change.From.Equals(Coordinate)) {
-          Coordinate = change.To;
-          Path = change.Path;
-          hasMoved = true;
           Alive = change.Unit.CurrentHealth() > 0;
+          if(change.To != null) {
+            Coordinate = change.To;
+            Path = change.Path;
+            hasMoved = true;
+          }
         }
         UpdateBehaviour();
       }

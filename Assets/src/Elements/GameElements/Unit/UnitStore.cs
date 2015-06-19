@@ -12,6 +12,7 @@ using System.Linq;
 using BattleForBetelgeuse.Dispatching;
 using BattleForBetelgeuse.GUI.Board;
 using BattleForBetelgeuse.Actions.DispatcherActions;
+using ExtensionMethods;
 
 namespace BattleForBetelgeuse.GameElements.Unit {
 
@@ -45,22 +46,31 @@ namespace BattleForBetelgeuse.GameElements.Unit {
       Publish();
     }
 
+    void UpdateUnitLocation(HexCoordinate oldLocation, HexCoordinate newLocation) {
+      var unit = units[oldLocation];
+      units.Remove(oldLocation);
+      units.Add(newLocation, unit);
+    }
+
+
     void MoveUnit(HexCoordinate from, HexCoordinate to, Unit unit, List<HexCoordinate> path) {
       if(TileIsOccupied(to)) {
-        UnitCollision(from, to);
+        UnitCollision(from, to, path);
       } else {
-        units.Remove(from);
-        units.Add(to, unit);
+        UpdateUnitLocation(from, to);
         changes.Add(new UnitChange { From = from, To = to, Unit = unit, Path = path });        
       }
     }
 
-    public void UnitCollision(HexCoordinate from, HexCoordinate to) {     
+    public void UnitCollision(HexCoordinate from, HexCoordinate to, List<HexCoordinate> path) {     
       var otherUnit = units[to];
       var unit = units[from];
+      path.RemoveFirst();
+      var moveTo = path.GetFirst();
+      UpdateUnitLocation(from, moveTo);
       unit.FightAgainst(otherUnit);
-      changes.Add(new UnitChange {From = from, To = from, Unit = unit });
-      changes.Add(new UnitChange {From = to, To = to, Unit = otherUnit });
+      changes.Add(new UnitChange { From = from, To = moveTo, Unit = unit, Path = path });
+      changes.Add(new UnitChange { From = to, Unit = otherUnit });
       if(otherUnit.CurrentHealth() < 0) {
         units.Remove(to);
       }

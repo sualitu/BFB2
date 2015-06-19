@@ -63,7 +63,7 @@ namespace BattleForBetelgeuse.Dispatching {
       }
     }
 
-    void HandleDispatchingAction(DispatchingAction dispatchingAction) {
+    private void HandleDispatchingAction(DispatchingAction dispatchingAction) {
       if(dispatchingAction is PauseDispatchingAction) {
         PauseDispatching();
       } else if(dispatchingAction is UnpauseDispatchingAction) {
@@ -75,21 +75,26 @@ namespace BattleForBetelgeuse.Dispatching {
       }
     }
 
+    private void ThrottleActions(Dispatchable action) {
+      if(ThrottledAction.IsThrottled(action)) {
+        var actionsCopy = new Dispatchable[actions.Count];
+        actions.CopyTo(actionsCopy);
+        foreach(var a in actionsCopy) {
+          if(!Object.ReferenceEquals(a, action) && a.GetType().Equals(action.GetType())) {
+            delayedActions.Add(a);
+            actions.Remove(a);
+          }
+        }
+      }
+    }
+
     private void dispatch() {
       while(actions.Count > 0) {
         var action = actions.First();  
         actions.Remove(action);
+
         try {
-          if(ThrottledAction.IsThrottled(action)) {
-            var actionsCopy = new Dispatchable[actions.Count];
-            actions.CopyTo(actionsCopy);
-            foreach(var a in actionsCopy) {
-              if(!Object.ReferenceEquals(a, action) && a.GetType().Equals(action.GetType())) {
-                delayedActions.Add(a);
-                actions.Remove(a);
-              }
-            }
-          }
+          ThrottleActions(action);
 
           if(!paused || (action is UnpausableAction)) {
             stores.ForEach(store => store.Update(action));

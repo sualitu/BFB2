@@ -19,7 +19,7 @@ namespace BattleForBetelgeuse.GUI.Hex {
     }
 
     public IList<IPathable> Neighbors<IPathable>() {
-      var xAdjustment = Y%2 == 0 ? 0 : -1;
+      var xAdjustment = Y % 2 == 0 ? 0 : -1;
       var neighbors = new List<HexCoordinate>() {
         new HexCoordinate(X-1, Y),
         new HexCoordinate(X+1, Y),
@@ -28,7 +28,11 @@ namespace BattleForBetelgeuse.GUI.Hex {
         new HexCoordinate(X+1+xAdjustment, Y-1),
         new HexCoordinate(X+1+xAdjustment, Y+1),
       };
-      return neighbors.Where(hex => GridManager.Instance.MoveableHex(hex)).Cast<IPathable>().ToList();
+      return neighbors.Cast<IPathable>().ToList();
+    }
+
+    public bool IsMoveable() {
+      return GridManager.Instance.MoveableHex(this);
     }
 
     public int EstimateCostTo(HexCoordinate goal) {
@@ -39,18 +43,21 @@ namespace BattleForBetelgeuse.GUI.Hex {
     }
 
     public int EstimateCostTo(IPathable goal) {
-      return EstimateCostTo((HexCoordinate) goal);
+      return EstimateCostTo((HexCoordinate)goal);
     }
 
     public override bool Equals(object obj) {
-      if(obj == null)
+      if(obj == null) {
         return false;
-      if(ReferenceEquals(this, obj))
+      }
+      if(ReferenceEquals(this, obj)) {
         return true;
-      if(obj.GetType() != typeof(HexCoordinate))
+      }
+      if(obj.GetType() != typeof(HexCoordinate)) {
         return false;
+      }
       if(obj is HexCoordinate) {
-        var other = (HexCoordinate) obj;
+        var other = (HexCoordinate)obj;
         return other.X == this.X && other.Y == this.Y;
       }
       return false;

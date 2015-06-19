@@ -6,6 +6,8 @@ namespace BattleForBetelgeuse.PathFinding {
 
     IList<T> Neighbors<T>();
 
+    bool IsMoveable();
+
     int EstimateCostTo(IPathable goal);
   }
 }

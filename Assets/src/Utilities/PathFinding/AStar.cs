@@ -29,6 +29,9 @@ namespace BattleForBetelgeuse.PathFinding {
         }
         openSet.Remove(current);
         closedSet.Add(current);
+        if(!current.IsMoveable()) {
+          continue;
+        }
         foreach(var neighbor in current.Neighbors<T>()) {
           if(closedSet.Contains(neighbor)) {
             continue;
