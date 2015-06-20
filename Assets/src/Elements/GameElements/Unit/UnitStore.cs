@@ -52,34 +52,29 @@ namespace BattleForBetelgeuse.GameElements.Unit {
       units.Add(newLocation, unit);
     }
 
-
     void MoveUnit(HexCoordinate from, HexCoordinate to, Unit unit, List<HexCoordinate> path) {
-      if(TileIsOccupied(to)) {
+      if(IsUnitAtTile(to)) {
         UnitCollision(from, to, path);
       } else {
         UpdateUnitLocation(from, to);
-        changes.Add(new UnitChange { From = from, To = to, Unit = unit, Path = path });        
+        changes.Add(new UnitChange { From = from, To = to, Path = path });        
       }
     }
 
-    public void UnitCollision(HexCoordinate from, HexCoordinate to, List<HexCoordinate> path) {     
-      var otherUnit = units[to];
-      var unit = units[from];
-      path.RemoveFirst();
-      var moveTo = path.GetFirst();
-      UpdateUnitLocation(from, moveTo);
-      unit.FightAgainst(otherUnit);
-      changes.Add(new UnitChange { From = from, To = moveTo, Unit = unit, Path = path });
-      changes.Add(new UnitChange { From = to, Unit = otherUnit });
-      if(otherUnit.CurrentHealth() < 0) {
-        units.Remove(to);
+    public void UnitCollision(HexCoordinate from, HexCoordinate to, List<HexCoordinate> path) { 
+      if(path.Count > 0) {
+        path.RemoveFirst();
+        if(path.Count > 1) {
+          var moveTo = path.GetFirst();
+          UpdateUnitLocation(from, moveTo);
+          changes.Add(new UnitChange { From = from, To = moveTo, Path = path });
+          from = moveTo;
+        }
       }
-      if(unit.CurrentHealth() < 0) {
-        units.Remove(from);
-      }
+      new UnitCombatAction(from, units[from], units[to]);
     }
 
-    bool TileIsOccupied(HexCoordinate tile) {
+    public bool IsUnitAtTile(HexCoordinate tile) {
       return units.ContainsKey(tile);
     }
 
@@ -103,7 +98,7 @@ namespace BattleForBetelgeuse.GameElements.Unit {
         var unitCardPlayedAction = (UnitCardPlayedAction)action;
         UnitPlayed(unitCardPlayedAction.Location, unitCardPlayedAction.Card);
         units.Add(unitCardPlayedAction.Location, (Unit.FromCard(unitCardPlayedAction.Card)));
-      } else if (action is BoardUpdateAction) {
+      } else if(action is BoardUpdateAction) {
         var boardUpdateAction = (BoardUpdateAction)action;
         BoardUpdate(boardUpdateAction.BoardStatus);
       }
@@ -118,14 +113,5 @@ namespace BattleForBetelgeuse.GameElements.Unit {
     }
   }
 
-  public class UnitChange {
-    public HexCoordinate From { get; set; }
-
-    public HexCoordinate To { get; set; }
-
-    public Unit Unit { get; set; }
-
-    public List<HexCoordinate> Path { get; set; }
-  }
 }
 

@@ -9,11 +9,11 @@ namespace BattleForBetelgeuse.GUI.Hex {
 
     public HexCoordinate Coordinate { 
       get {
-        _ReadyToGo.WaitOne();
+        _readyToGo.WaitOne();
         return hexCoord;
       }
       private set {
-        _ReadyToGo.Set();
+        _readyToGo.Set();
         hexCoord = value;
       }
     }

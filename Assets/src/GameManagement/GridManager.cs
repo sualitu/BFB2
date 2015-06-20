@@ -1,6 +1,7 @@
 using UnityEngine;
 using BattleForBetelgeuse;
 using BattleForBetelgeuse.GUI.Hex;
+using BattleForBetelgeuse.GameElements.Unit;
 
 namespace BattleForBetelgeuse {
 
@@ -8,8 +9,8 @@ namespace BattleForBetelgeuse {
     private static GridManager instance;
     float hexWidth;
     float hexHeight;
-    const int mapWidth = 30;
-    const int mapHeight = 30;
+    const int mapWidth = 10;
+    const int mapHeight = 10;
     TileType[][] map;
         
     public static GridManager Instance { 
@@ -46,7 +47,7 @@ namespace BattleForBetelgeuse {
         map[i] = new TileType[mapWidth];
         for(int j = 0; j < mapWidth; j++) {
           var x = Random.Range(0, 100);
-          if(x > 10) {
+          if(x > 5) {
             map[i][j] = TileType.NORMAL;
           } else {
             map[i][j] = TileType.NONE;
@@ -58,7 +59,7 @@ namespace BattleForBetelgeuse {
     public bool MoveableHex(HexCoordinate hex) {
       try {
         var type = map[hex.X][hex.Y];
-        return type == TileType.NORMAL;
+        return type == TileType.NORMAL && !UnitStore.Instance.IsUnitAtTile(hex);
       } catch {
         return false;
       }

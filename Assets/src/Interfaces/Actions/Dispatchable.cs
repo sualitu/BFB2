@@ -14,7 +14,7 @@ namespace BattleForBetelgeuse.Actions {
       new DelayedAction(this);
     }
 
-    internal AutoResetEvent _ReadyToGo = new AutoResetEvent(false);
+    internal AutoResetEvent _readyToGo = new AutoResetEvent(false);
 
     public int CompareTo(Dispatchable other) {
       return invocation.CompareTo(other.invocation);

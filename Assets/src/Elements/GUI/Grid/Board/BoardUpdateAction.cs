@@ -7,11 +7,11 @@ namespace BattleForBetelgeuse.GUI.Board {
 
     public BoardStatus BoardStatus { 
       get {
-        _ReadyToGo.WaitOne();
+        _readyToGo.WaitOne();
         return boardStatus;
       }
       private set {
-        _ReadyToGo.Set();
+        _readyToGo.Set();
         boardStatus = value;
       }
     }

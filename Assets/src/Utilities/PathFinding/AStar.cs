@@ -29,10 +29,11 @@ namespace BattleForBetelgeuse.PathFinding {
         }
         openSet.Remove(current);
         closedSet.Add(current);
-        if(!current.IsMoveable()) {
-          continue;
-        }
-        foreach(var neighbor in current.Neighbors<T>()) {
+        foreach(var neighbor in current.Neighbors<T>()) {          
+          if(!neighbor.Equals(goal) && !neighbor.IsMoveable()) {
+            closedSet.Add(neighbor);
+          }
+
           if(closedSet.Contains(neighbor)) {
             continue;
           }

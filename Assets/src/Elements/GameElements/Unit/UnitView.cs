@@ -28,12 +28,16 @@ namespace BattleForBetelgeuse.GameElements.Unit {
       Alive = true;
       Coordinate = coordinate;
       UnitStore.Instance.Subscribe(Move);
+      CombatStore.Instance.Subscribe(Combat);
+    }
+
+    public void Combat(IEnumerable<CombatEvent> log) {
+      Debug.Log("Combat!");
     }
 
     public void Move(List<UnitChange> changes) {
       foreach(var change in changes) {
         if(change.From.Equals(Coordinate)) {
-          Alive = change.Unit.CurrentHealth() > 0;
           if(change.To != null) {
             Coordinate = change.To;
             Path = change.Path;
