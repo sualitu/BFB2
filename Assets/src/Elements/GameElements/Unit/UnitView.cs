@@ -12,6 +12,8 @@ namespace BattleForBetelgeuse.GameElements.Unit {
 
     public List<HexCoordinate> Path { get; set; }
 
+    public HexCoordinate AttackTarget { get; set; }
+
     internal bool Alive { get; set; }
 
     bool hasMoved = false;
@@ -32,7 +34,6 @@ namespace BattleForBetelgeuse.GameElements.Unit {
     }
 
     public void Combat(IEnumerable<CombatEvent> log) {
-      Debug.Log("Combat!");
     }
 
     public void Move(List<UnitChange> changes) {
@@ -42,6 +43,11 @@ namespace BattleForBetelgeuse.GameElements.Unit {
             Coordinate = change.To;
             Path = change.Path;
             hasMoved = true;
+          }
+          if(change.Attack != null) {
+            AttackTarget = change.Attack;
+          } else {
+            AttackTarget = null;
           }
         }
         UpdateBehaviour();

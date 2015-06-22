@@ -8,6 +8,8 @@ namespace BattleForBetelgeuse.GameElements.Unit {
 
     public HexCoordinate To { get; set; }
 
+    public HexCoordinate Attack { get; set; }
+
     public List<HexCoordinate> Path { get; set; }
   }
 }

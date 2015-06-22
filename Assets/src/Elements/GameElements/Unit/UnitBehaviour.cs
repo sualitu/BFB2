@@ -26,6 +26,9 @@ namespace BattleForBetelgeuse.GameElements.Unit {
       } else {
         Animations.Movement.MoveAlongPath<UnitBehaviour>(Companion.Path, this);
       }
+      if(Companion.AttackTarget != null) {
+        new UnitCombatAction(Companion.Coordinate, UnitStore.Instance.UnitAtTile(Companion.Coordinate), UnitStore.Instance.UnitAtTile(Companion.AttackTarget));
+      }
     }
 
     public void KillUnit() { KillUnit(Settings.Animations.AnimateDeath); }

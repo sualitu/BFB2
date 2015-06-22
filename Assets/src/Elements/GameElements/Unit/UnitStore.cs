@@ -67,15 +67,18 @@ namespace BattleForBetelgeuse.GameElements.Unit {
         if(path.Count > 1) {
           var moveTo = path.GetFirst();
           UpdateUnitLocation(from, moveTo);
-          changes.Add(new UnitChange { From = from, To = moveTo, Path = path });
+          changes.Add(new UnitChange { From = from, To = moveTo, Path = path, Attack = to });
           from = moveTo;
         }
       }
-      new UnitCombatAction(from, units[from], units[to]);
     }
 
     public bool IsUnitAtTile(HexCoordinate tile) {
       return units.ContainsKey(tile);
+    }
+
+    public Unit UnitAtTile(HexCoordinate tile) {
+      return units.ContainsKey(tile) ? units[tile] : null;
     }
 
     internal override void SendMessage(Message msg) {

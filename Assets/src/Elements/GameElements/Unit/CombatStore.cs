@@ -23,12 +23,10 @@ namespace BattleForBetelgeuse.GameElements.Unit {
 
     public override void Update(Dispatchable action) {
       if(action is UnitCombatAction) {
-        var unitCombatAction = (UnitCombatAction) action;
+        var unitCombatAction = (UnitCombatAction)action;
         Publish();
       }
     }
-
-
 
     internal override void SendMessage(Message msg) {
       msg(null);
