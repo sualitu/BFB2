@@ -3,8 +3,10 @@ using BattleForBetelgeuse.GUI.Hex;
 using BattleForBetelgeuse.Interactable;
 using UnityEngine;
 using System.Collections.Generic;
+using BattleForBetelgeuse.GameElements.Combat;
+using BattleForBetelgeuse.GameElements.Combat.Events;
 
-namespace BattleForBetelgeuse.GameElements.Unit {
+namespace BattleForBetelgeuse.GameElements.Units {
 
   public class UnitView : BehaviourUpdatingView {
 
@@ -33,7 +35,20 @@ namespace BattleForBetelgeuse.GameElements.Unit {
       CombatStore.Instance.Subscribe(Combat);
     }
 
-    public void Combat(IEnumerable<CombatEvent> log) {
+    public void Combat(CombatLog log) {
+      Debug.Log("CombatLog recieved");
+      while(log.MoveNext()) {
+        Debug.Log("CombatEvent recieved");
+        var current = log.Current;
+        if(current is UnitCombatEvent) {
+          var unitCombatEvent = current as UnitCombatEvent;
+          if(unitCombatEvent.AttackerLocation.Equals(Coordinate)) {
+            Debug.Log("I'm attacking!");
+          } else if(unitCombatEvent.DefenderLocation.Equals(Coordinate)) {
+            Debug.Log("I'm defending...");
+          }
+        }
+      }
     }
 
     public void Move(List<UnitChange> changes) {

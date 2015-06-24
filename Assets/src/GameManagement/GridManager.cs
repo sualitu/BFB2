@@ -1,7 +1,7 @@
 using UnityEngine;
 using BattleForBetelgeuse;
 using BattleForBetelgeuse.GUI.Hex;
-using BattleForBetelgeuse.GameElements.Unit;
+using BattleForBetelgeuse.GameElements.Units;
 
 namespace BattleForBetelgeuse {
 

@@ -5,7 +5,7 @@ using UnityEngine;
 using BattleForBetelgeuse.GUI.Hex;
 using System.Collections;
 using BattleForBetelgeuse.TweenInteraction;
-using BattleForBetelgeuse.GameElements.Unit;
+using BattleForBetelgeuse.GameElements.Units;
 
 namespace BattleForBetelgeuse.Animations {
 

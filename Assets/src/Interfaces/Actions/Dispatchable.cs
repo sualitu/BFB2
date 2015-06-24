@@ -8,7 +8,7 @@ namespace BattleForBetelgeuse.Actions {
 
   public abstract class Dispatchable : IComparable<Dispatchable> {
 
-    public long invocation { get; private set; }
+    public long Invocation { get; private set; }
 
     public void Delay() {
       new DelayedAction(this);
@@ -17,11 +17,11 @@ namespace BattleForBetelgeuse.Actions {
     internal AutoResetEvent _readyToGo = new AutoResetEvent(false);
 
     public int CompareTo(Dispatchable other) {
-      return invocation.CompareTo(other.invocation);
+      return Invocation.CompareTo(other.Invocation);
     }
 
     public Dispatchable() {
-      invocation = DateTime.Now.Ticks;
+      Invocation = DateTime.Now.Ticks;
       Dispatcher.Instance.Signup(this);
     }
   }

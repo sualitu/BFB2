@@ -1,4 +1,4 @@
-namespace BattleForBetelgeuse.GameElements.Unit {
+namespace BattleForBetelgeuse.GameElements.Units {
 
   public abstract class Fighter {
 

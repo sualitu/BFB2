@@ -1,7 +1,7 @@
 using BattleForBetelgeuse.GUI.Hex;
 using System.Collections.Generic;
 
-namespace BattleForBetelgeuse.GameElements.Unit {
+namespace BattleForBetelgeuse.GameElements.Units {
 
   public class UnitChange {
     public HexCoordinate From { get; set; }

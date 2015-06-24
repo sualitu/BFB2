@@ -14,7 +14,7 @@ using BattleForBetelgeuse.GUI.Board;
 using BattleForBetelgeuse.Actions.DispatcherActions;
 using ExtensionMethods;
 
-namespace BattleForBetelgeuse.GameElements.Unit {
+namespace BattleForBetelgeuse.GameElements.Units {
 
   public class UnitStore : PublishingStore<List<UnitChange>> {
 
@@ -50,6 +50,10 @@ namespace BattleForBetelgeuse.GameElements.Unit {
       var unit = units[oldLocation];
       units.Remove(oldLocation);
       units.Add(newLocation, unit);
+    }
+
+    public HexCoordinate LocationFromUnit(Unit unit) {
+      return units.Where(pair => pair.Value == unit).FirstOrDefault().Key;
     }
 
     void MoveUnit(HexCoordinate from, HexCoordinate to, Unit unit, List<HexCoordinate> path) {

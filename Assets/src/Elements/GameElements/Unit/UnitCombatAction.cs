@@ -1,26 +1,33 @@
 using BattleForBetelgeuse.GUI.Hex;
 using BattleForBetelgeuse.Actions;
 
-namespace BattleForBetelgeuse.GameElements.Unit {
+namespace BattleForBetelgeuse.GameElements.Units {
 
-  class UnitCombatAction : Dispatchable {
+  public class UnitCombatAction : Dispatchable {
     HexCoordinate from;
 
     public HexCoordinate From {
       get {
-        _readyToGo.WaitOne();
         return from;
       }
       private set {
         from = value;
       }
     }
-
+    HexCoordinate to;
+    
+    public HexCoordinate To {
+      get {
+        return to;
+      }
+      private set {
+        to = value;
+      }
+    }
     Unit attacker;
 
     public Unit Attacker {
       get {
-        _readyToGo.WaitOne();
         return attacker;
       }
       private set {
@@ -32,7 +39,6 @@ namespace BattleForBetelgeuse.GameElements.Unit {
 
     public Unit Defender {
       get {
-        _readyToGo.WaitOne();
         return defender;
       }
       private set {
@@ -40,14 +46,22 @@ namespace BattleForBetelgeuse.GameElements.Unit {
       }
     }
 
-    public UnitCombatAction(HexCoordinate from, Unit attacker, Unit defender) {
+    public void Wait() {
+      _readyToGo.WaitOne();
+    }
+
+    public UnitCombatAction(HexCoordinate from, HexCoordinate to, Unit attacker, Unit defender) {
       From = from;
+      To = to;
       Attacker = attacker;
       Defender = defender;
       _readyToGo.Set();
     }
 
-
+    public override string ToString() {
+      return string.Format("[UnitCombatAction: from={0}]", from);
+    }
+    
   }
 
 

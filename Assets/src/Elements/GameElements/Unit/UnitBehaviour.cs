@@ -5,7 +5,7 @@ using BattleForBetelgeuse.TweenInteraction;
 using BattleForBetelgeuse.Actions.DispatcherActions;
 using UnityEngine;
 
-namespace BattleForBetelgeuse.GameElements.Unit {
+namespace BattleForBetelgeuse.GameElements.Units {
 
   public class UnitBehaviour : ViewBehaviour<UnitView>, ITweenable {
 
@@ -27,7 +27,7 @@ namespace BattleForBetelgeuse.GameElements.Unit {
         Animations.Movement.MoveAlongPath<UnitBehaviour>(Companion.Path, this);
       }
       if(Companion.AttackTarget != null) {
-        new UnitCombatAction(Companion.Coordinate, UnitStore.Instance.UnitAtTile(Companion.Coordinate), UnitStore.Instance.UnitAtTile(Companion.AttackTarget));
+        new UnitCombatAction(Companion.Coordinate, Companion.AttackTarget, UnitStore.Instance.UnitAtTile(Companion.Coordinate), UnitStore.Instance.UnitAtTile(Companion.AttackTarget));
       }
     }
 

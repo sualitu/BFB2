@@ -25,7 +25,7 @@ namespace BattleForBetelgeuse.GUI.Board {
     }
 
     public override string ToString() {
-      return string.Format("{1}: [BoardUpdateAction: boardStatus={0}]", boardStatus, invocation);
+      return string.Format("{1}: [BoardUpdateAction: boardStatus={0}]", boardStatus, Invocation);
     }
     
   }

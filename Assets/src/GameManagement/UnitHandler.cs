@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using BattleForBetelgeuse.GUI.Hex;
 using BattleForBetelgeuse.Utilities;
-using BattleForBetelgeuse.GameElements.Unit;
+using BattleForBetelgeuse.GameElements.Units;
 using BattleForBetelgeuse.GameElements.Cards;
 using BattleForBetelgeuse.Cards.UnitCards;
 using BattleForBetelgeuse.GUI;

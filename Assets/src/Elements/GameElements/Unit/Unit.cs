@@ -1,7 +1,7 @@
 using BattleForBetelgeuse.Cards.UnitCards;
 using BattleForBetelgeuse.GUI.Hex;
 
-namespace BattleForBetelgeuse.GameElements.Unit {
+namespace BattleForBetelgeuse.GameElements.Units {
 
   public class Unit : Fighter {
     public static Unit FromCard(UnitCard card) {
@@ -11,8 +11,6 @@ namespace BattleForBetelgeuse.GameElements.Unit {
         Movement = card.Movement
       };
     }
-
-    public HexCoordinate NewLocation { get; set; }
 
     public int Movement { get; set; }
 
