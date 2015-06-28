@@ -13,11 +13,8 @@ namespace BattleForBetelgeuse.GameElements.Combat.Events {
 
     public HexCoordinate DefenderLocation { get; set; }
 
-    public UnitCombatEvent(UnitCombatAction action) : base(action.Invocation) {
-      Attacker = action.Attacker;
-      AttackerLocation = action.From;
-      Defender = action.Defender;
-      DefenderLocation = action.To;
+    public UnitCombatEvent(long time) : base(time) {
+      
     }
   }
 }

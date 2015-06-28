@@ -4,36 +4,42 @@ namespace BattleForBetelgeuse.GameElements.Units {
 
     public int Health { get; set; }
     
-    public int DamageTaken { get; set; }    
+    public int DamageTaken { get; set; }
     
-    public int CurrentHealth() { return Health - DamageTaken; }
+    public int CurrentHealth() {
+      return Health - DamageTaken;
+    }
     
     public int Attack { get; set; }
     
     public int AttackChanged { get; private set; }
     
-    public int CurrentAttack() { return Attack + AttackChanged; }
-
-    public delegate void CombatAction(Fighter me, Fighter other);
-
-    public CombatAction OnAttack = StandardOnAttack;
-    public CombatAction OnDefend = StandardOnDefend;
-
-    private static void StandardOnAttack(Fighter attacker, Fighter defender) {
-      attacker.DamageTaken += defender.Attack;
-    }
-    private static void StandardOnDefend(Fighter attacker, Fighter defender) {
-      defender.DamageTaken += attacker.Attack;
+    public int CurrentAttack() {
+      return Attack + AttackChanged;
     }
 
-    public void FightAgainst(Fighter defender) {
-      OnAttack(this, defender);
-      defender.DefendAgainst(this);
+    public delegate int DealDamage();
+
+    public delegate void TakeDamage(int damage);
+
+    private int StandardDealDamage() {
+      return CurrentAttack();
     }
 
-    public void DefendAgainst(Fighter attacker) {
-      OnDefend(attacker, this);
+    private void StandardTakeDamage(int damage) {
+      DamageTaken += damage;
+    }
 
+    public DealDamage DealDamageAttacking;
+    public DealDamage DealDamageDefending;
+    public TakeDamage TakeDamageAttacking;
+    public TakeDamage TakeDamageDefending;
+
+    public Fighter() {
+      DealDamageAttacking = StandardDealDamage;
+      DealDamageDefending = StandardDealDamage;
+      TakeDamageAttacking = StandardTakeDamage;
+      TakeDamageDefending = StandardTakeDamage;
     }
   }
 }

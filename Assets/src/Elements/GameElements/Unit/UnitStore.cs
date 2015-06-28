@@ -68,10 +68,10 @@ namespace BattleForBetelgeuse.GameElements.Units {
     public void UnitCollision(HexCoordinate from, HexCoordinate to, List<HexCoordinate> path) { 
       if(path.Count > 0) {
         path.RemoveFirst();
-        if(path.Count > 1) {
+        if(path.Count > 0) {
           var moveTo = path.GetFirst();
           UpdateUnitLocation(from, moveTo);
-          changes.Add(new UnitChange { From = from, To = moveTo, Path = path, Attack = to });
+          changes.Add(new UnitChange { From = from, To = path.Count > 1 ? moveTo : null, Path = path, Attack = to });
           from = moveTo;
         }
       }

@@ -325,12 +325,12 @@ public class MeshExploder : MonoBehaviour {
 		preparation = prep;
 		if (cachePreparation) cache[oldMesh] = prep;
 		
-		if (fadeTime != 0 && !shadersAlreadyHandleTransparency) {
+		if (fadeTime != 0) {
 			// Preload any replacement shaders that will be needed:
 			foreach (var i in GetComponent<Renderer>().sharedMaterials) {
 				var shader = i.shader;
 				var replacement = Fade.GetReplacementFor(shader);
-				if (replacement == null || !replacement.name.StartsWith("Transparent/")) {
+				if (replacement == null || !replacement.name.StartsWith("Legacy Shaders/Transparent/")) {
 					Debug.LogWarning("Couldn't find an explicitly transparent version of shader" +
 						" '" + shader.name + "' so fading may not work. If the shader does" +
 						" support transparency then this warning can be avoided by enabling" +
@@ -483,7 +483,7 @@ public class MeshExploder : MonoBehaviour {
 				var fade = explosion.AddComponent<Fade>();
 				fade.waitTime = fadeWaitTime;
 				fade.fadeTime = fadeTime;
-				fade.replaceShaders = !shadersAlreadyHandleTransparency;
+        fade.replaceShaders = true; //!shadersAlreadyHandleTransparency;
 				explosion.AddComponent<DestroyOnFadeCompletion>();
 			}
 			

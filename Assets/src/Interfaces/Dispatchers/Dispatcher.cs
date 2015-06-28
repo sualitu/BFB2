@@ -15,8 +15,8 @@ namespace BattleForBetelgeuse.Dispatching {
 
     private bool paused = false;
     private static Dispatcher instance;
-    Thread dispatcherThread;
-    List<IStore> stores;
+    private Thread dispatcherThread;
+    private List<IStore> stores;
     private List<Dispatchable> actions;
     private List<Dispatchable> delayedActions;
 
@@ -40,7 +40,7 @@ namespace BattleForBetelgeuse.Dispatching {
     }
 
     private void startDispatching() {
-      dispatcherThread = new Thread(new ThreadStart(dispatch));
+      dispatcherThread = new Thread(new ThreadStart(Dispatch));
       dispatcherThread.Start();
     }
 
@@ -88,7 +88,7 @@ namespace BattleForBetelgeuse.Dispatching {
       }
     }
 
-    private void dispatch() {
+    private void Dispatch() {
       while(actions.Count > 0) {
         var action = actions.First();  
         actions.Remove(action);
@@ -102,7 +102,7 @@ namespace BattleForBetelgeuse.Dispatching {
             delayedActions.Add(action);
           }
         } catch(System.Exception e) {
-          Debug.LogError("Dispatcher crashed: " + e.Message);
+          Debug.LogError("An error occured in the dispatcher thread: " + e.Message);
           continue;
         }  
       }     

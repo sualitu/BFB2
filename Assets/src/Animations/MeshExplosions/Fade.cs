@@ -16,7 +16,7 @@ public class Fade : MonoBehaviour {
 		Shader replacement;
 		if (replacementShaders.TryGetValue(original, out replacement)) return replacement;
 		
-		const string transparentPrefix = "Transparent/";
+    const string transparentPrefix = "Legacy Shaders/Transparent/";
 		const string mobilePrefix = "Mobile/";
 		
 		var name = original.name;
@@ -24,7 +24,7 @@ public class Fade : MonoBehaviour {
 			name = name.Substring(mobilePrefix.Length);
 		}
 		if (!name.StartsWith(transparentPrefix)) {
-			replacement = Shader.Find(transparentPrefix + name);
+      replacement = Shader.Find("Legacy Shaders/Transparent/Diffuse");
 		}
 		
 		replacementShaders[original] = replacement;

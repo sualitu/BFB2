@@ -26,8 +26,13 @@ namespace BattleForBetelgeuse.GameElements.Units {
       } else {
         Animations.Movement.MoveAlongPath<UnitBehaviour>(Companion.Path, this);
       }
+      CheckCombat();
+    }
+
+    private void CheckCombat() {
       if(Companion.AttackTarget != null) {
         new UnitCombatAction(Companion.Coordinate, Companion.AttackTarget, UnitStore.Instance.UnitAtTile(Companion.Coordinate), UnitStore.Instance.UnitAtTile(Companion.AttackTarget));
+        Companion.AttackTarget = null;
       }
     }
 
@@ -48,6 +53,7 @@ namespace BattleForBetelgeuse.GameElements.Units {
       if(!Companion.Alive) { 
         KillUnit();
       }
+      CheckCombat();
     }
 
     public void BeforeTween() {

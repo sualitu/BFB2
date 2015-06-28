@@ -19,9 +19,28 @@ namespace BattleForBetelgeuse.GameElements.Combat {
       } 
     }
 
+    UnitCombatEvent PerformCombat(UnitCombatAction action) {
+      var attacker = action.Attacker;
+      var attackerDamageDone = attacker.DealDamageAttacking();
+      var defender = action.Defender;
+      var defenderDamageDone = defender.DealDamageDefending();
+
+      attacker.TakeDamageAttacking(defenderDamageDone);
+
+      defender.TakeDamageDefending(attackerDamageDone);
+
+      return new UnitCombatEvent(action.Invocation) {
+        Attacker = attacker,
+        AttackerLocation = action.From,
+        Defender = defender,
+        DefenderLocation = action.To
+      };
+    }
+
     private void HandleUnitCombatAction(UnitCombatAction action) {
       action.Wait();
-      _events.Add(new UnitCombatEvent(action));
+      var logEvent = PerformCombat(action);
+      _events.Add(logEvent);
     }
 
     private List<CombatEvent> _events; 

@@ -35,20 +35,24 @@ namespace BattleForBetelgeuse.GameElements.Units {
       CombatStore.Instance.Subscribe(Combat);
     }
 
+    private void EngageCombat(HexCoordinate opponentPosition, Unit unit) {
+      Alive = unit.CurrentHealth() > 0;
+    }
+
     public void Combat(CombatLog log) {
-      Debug.Log("CombatLog recieved");
       while(log.MoveNext()) {
-        Debug.Log("CombatEvent recieved");
         var current = log.Current;
         if(current is UnitCombatEvent) {
           var unitCombatEvent = current as UnitCombatEvent;
+
           if(unitCombatEvent.AttackerLocation.Equals(Coordinate)) {
-            Debug.Log("I'm attacking!");
+            EngageCombat(unitCombatEvent.DefenderLocation, unitCombatEvent.Attacker);
           } else if(unitCombatEvent.DefenderLocation.Equals(Coordinate)) {
-            Debug.Log("I'm defending...");
+            EngageCombat(unitCombatEvent.AttackerLocation, unitCombatEvent.Defender);
           }
         }
       }
+      UpdateBehaviour();
     }
 
     public void Move(List<UnitChange> changes) {
