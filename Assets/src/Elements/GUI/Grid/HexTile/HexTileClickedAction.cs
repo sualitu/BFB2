@@ -1,25 +1,22 @@
-using BattleForBetelgeuse.Actions;
-using System.Threading;
-
 namespace BattleForBetelgeuse.GUI.Hex {
+    using BattleForBetelgeuse.Actions;
 
-  public class HexTileClickedAction : UnpausableAction {
+    public class HexTileClickedAction : UnpausableAction {
+        private HexCoordinate hexCoord;
 
-    HexCoordinate hexCoord;
+        public HexTileClickedAction(HexCoordinate coordinate) {
+            this.Coordinate = coordinate;
+        }
 
-    public HexCoordinate Coordinate { 
-      get {
-        _readyToGo.WaitOne();
-        return hexCoord;
-      }
-      private set {
-        _readyToGo.Set();
-        hexCoord = value;
-      }
+        public HexCoordinate Coordinate {
+            get {
+                this._readyToGo.WaitOne();
+                return this.hexCoord;
+            }
+            private set {
+                this._readyToGo.Set();
+                this.hexCoord = value;
+            }
+        }
     }
-
-    public HexTileClickedAction(HexCoordinate coordinate) : base() {
-      Coordinate = coordinate;
-    }    
-  }
 }

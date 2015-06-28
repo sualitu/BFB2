@@ -1,11 +1,14 @@
 namespace BattleForBetelgeuse.GameElements.Units {
     using BattleForBetelgeuse.Actions.DispatcherActions;
     using BattleForBetelgeuse.Animations;
+    using BattleForBetelgeuse.Animations.Combat;
     using BattleForBetelgeuse.GUI.Hex;
     using BattleForBetelgeuse.TweenInteraction;
     using BattleForBetelgeuse.View;
 
     public class UnitBehaviour : ViewBehaviour<UnitView>, ITweenable {
+        private CombatAnimation combatAnimation;
+
         public HexCoordinate Coordinate { private get; set; }
 
         public void BeforeTween() {
@@ -21,14 +24,15 @@ namespace BattleForBetelgeuse.GameElements.Units {
             this.gameObject.name = "Unit:" + this.UniqueId();
             this.gameObject.tag = "Unit";
             this.Companion = new UnitView(this.Coordinate);
+            this.combatAnimation = this.GetComponentInChildren<CombatAnimation>();
         }
 
         public void MoveTo(HexCoordinate coordinate) {
             this.MoveTo(coordinate, Settings.Animations.AnimateMovement);
         }
 
-        public void MoveTo(HexCoordinate coordinate, bool animation) {
-            if (!animation) {
+        public void MoveTo(HexCoordinate coordinate, bool animate) {
+            if (!animate) {
                 this.gameObject.transform.position = GridManager.CalculateLocationFromHexCoordinate(coordinate);
             } else {
                 Movement.MoveAlongPath(this.Companion.Path, this);
@@ -50,8 +54,8 @@ namespace BattleForBetelgeuse.GameElements.Units {
             this.KillUnit(Settings.Animations.AnimateDeath);
         }
 
-        public void KillUnit(bool animation) {
-            if (animation) {
+        public void KillUnit(bool animate) {
+            if (animate) {
                 Explosions.MeshExplosion(this.gameObject);
                 Explosions.TinyExplosion(this.gameObject);
             }
@@ -66,6 +70,13 @@ namespace BattleForBetelgeuse.GameElements.Units {
                 this.KillUnit();
             }
             this.CheckCombat();
+            if (this.Companion.CombatTarget != null && Settings.Animations.AnimateCombat) {
+                this.AnimateCombat();
+            }
+        }
+
+        private void AnimateCombat() {
+            this.combatAnimation.CombatWith(null);
         }
     }
 }

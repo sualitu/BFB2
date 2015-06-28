@@ -5,5 +5,7 @@ namespace BattleForBetelgeuse {
 
   public class Prefabs : MonoBehaviour {
     public GameObject HexPrefab;
+
+      public Transform PlasmaMuzzle;
   }
 }

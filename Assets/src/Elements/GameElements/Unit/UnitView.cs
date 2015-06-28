@@ -19,6 +19,7 @@ namespace BattleForBetelgeuse.GameElements.Units {
         internal HexCoordinate Coordinate { get; set; }
         public List<HexCoordinate> Path { get; set; }
         public HexCoordinate AttackTarget { get; set; }
+        public HexCoordinate CombatTarget { get; set; }
         internal bool Alive { get; set; }
 
         internal bool HasMoved {
@@ -29,8 +30,9 @@ namespace BattleForBetelgeuse.GameElements.Units {
             }
         }
 
-        private void EngageCombat(HexCoordinate opponentPosition, Unit unit) {
+        private void EngageCombat(HexCoordinate opponentPosition, Fighter unit) {
             this.Alive = unit.CurrentHealth() > 0;
+            this.CombatTarget = opponentPosition;
         }
 
         public void Combat(CombatLog log) {
