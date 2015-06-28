@@ -13,10 +13,10 @@ namespace BattleForBetelgeuse.GameElements.Units {
         public TakeDamage TakeDamageDefending;
 
         protected Fighter() {
-            this.DealDamageAttacking = this.StandardDealDamage;
-            this.DealDamageDefending = this.StandardDealDamage;
-            this.TakeDamageAttacking = this.StandardTakeDamage;
-            this.TakeDamageDefending = this.StandardTakeDamage;
+            DealDamageAttacking = StandardDealDamage;
+            DealDamageDefending = StandardDealDamage;
+            TakeDamageAttacking = StandardTakeDamage;
+            TakeDamageDefending = StandardTakeDamage;
         }
 
         public int Health { get; set; }
@@ -24,20 +24,20 @@ namespace BattleForBetelgeuse.GameElements.Units {
         public int Attack { get; set; }
         public int AttackChanged { get; set; }
 
-        public int CurrentHealth() {
-            return this.Health - this.DamageTaken;
+        public virtual int CurrentHealth() {
+            return Health - DamageTaken;
         }
 
         public int CurrentAttack() {
-            return this.Attack + this.AttackChanged;
+            return Attack + AttackChanged;
         }
 
         private int StandardDealDamage() {
-            return this.CurrentAttack();
+            return CurrentAttack();
         }
 
         private void StandardTakeDamage(int damage) {
-            this.DamageTaken += damage;
+            DamageTaken += damage;
         }
     }
 }

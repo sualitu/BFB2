@@ -9,8 +9,16 @@ namespace BattleForBetelgeuse.GameElements.Units {
             return new Unit { Health = card.Health, Attack = card.Attack, Movement = card.Movement };
         }
 
+        public override int CurrentHealth() {
+            var curr = base.CurrentHealth();
+            if (curr < 0) {
+                UnitStore.Instance.RemoveUnit(this);
+            }
+            return curr;
+        }
+
         public int CurrentMovement() {
-            return this.Movement - this.MovementSpend;
+            return Movement - MovementSpend;
         }
     }
 }

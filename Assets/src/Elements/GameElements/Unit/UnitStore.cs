@@ -20,7 +20,7 @@ namespace BattleForBetelgeuse.GameElements.Units {
         private List<UnitChange> changes = new List<UnitChange>();
 
         private UnitStore() {
-            this.units = new Dictionary<HexCoordinate, Unit>();
+            units = new Dictionary<HexCoordinate, Unit>();
         }
 
         public static UnitStore Instance {
@@ -36,31 +36,28 @@ namespace BattleForBetelgeuse.GameElements.Units {
             if (status.PreviousSelection == null || status.CurrentSelection == null) {
                 return;
             }
-            if (this.units.ContainsKey(status.PreviousSelection)) {
-                this.MoveUnit(status.PreviousSelection,
-                              status.CurrentSelection,
-                              this.units[status.PreviousSelection],
-                              status.Path);
+            if (units.ContainsKey(status.PreviousSelection)) {
+                MoveUnit(status.PreviousSelection, status.CurrentSelection, units[status.PreviousSelection], status.Path);
             }
-            this.Publish();
+            Publish();
         }
 
         private void UpdateUnitLocation(HexCoordinate oldLocation, HexCoordinate newLocation) {
-            var unit = this.units[oldLocation];
-            this.units.Remove(oldLocation);
-            this.units.Add(newLocation, unit);
+            var unit = units[oldLocation];
+            units.Remove(oldLocation);
+            units.Add(newLocation, unit);
         }
 
         public HexCoordinate LocationFromUnit(Unit unit) {
-            return this.units.FirstOrDefault(pair => pair.Value == unit).Key;
+            return units.FirstOrDefault(pair => pair.Value == unit).Key;
         }
 
         private void MoveUnit(HexCoordinate from, HexCoordinate to, Unit unit, List<HexCoordinate> path) {
-            if (this.IsUnitAtTile(to)) {
-                this.UnitCollision(from, to, path);
+            if (IsUnitAtTile(to)) {
+                UnitCollision(from, to, path);
             } else {
-                this.UpdateUnitLocation(from, to);
-                this.changes.Add(new UnitChange { From = from, To = to, Path = path });
+                UpdateUnitLocation(from, to);
+                changes.Add(new UnitChange { From = from, To = to, Path = path });
             }
         }
 
@@ -69,8 +66,8 @@ namespace BattleForBetelgeuse.GameElements.Units {
                 path.RemoveFirst();
                 if (path.Count > 0) {
                     var moveTo = path.GetFirst();
-                    this.UpdateUnitLocation(from, moveTo);
-                    this.changes.Add(new UnitChange {
+                    UpdateUnitLocation(from, moveTo);
+                    changes.Add(new UnitChange {
                         From = from,
                         To = path.Count > 1 ? moveTo : null,
                         Path = path,
@@ -82,21 +79,21 @@ namespace BattleForBetelgeuse.GameElements.Units {
         }
 
         public bool IsUnitAtTile(HexCoordinate tile) {
-            return this.units.ContainsKey(tile);
+            return units.ContainsKey(tile);
         }
 
         public Unit UnitAtTile(HexCoordinate tile) {
-            return this.units.ContainsKey(tile) ? this.units[tile] : null;
+            return units.ContainsKey(tile) ? units[tile] : null;
         }
 
         internal override void SendMessage(Message msg) {
-            msg(this.changes);
+            msg(changes);
         }
 
         internal override void Publish() {
-            lock (this.changes) {
+            lock (changes) {
                 base.Publish();
-                this.changes = new List<UnitChange>();
+                changes = new List<UnitChange>();
             }
         }
 
@@ -107,20 +104,27 @@ namespace BattleForBetelgeuse.GameElements.Units {
         public void HandleAction(Dispatchable action) {
             if (action is UnitCardPlayedAction) {
                 var unitCardPlayedAction = (UnitCardPlayedAction)action;
-                this.UnitPlayed(unitCardPlayedAction.Location, unitCardPlayedAction.Card);
-                this.units.Add(unitCardPlayedAction.Location, (Unit.FromCard(unitCardPlayedAction.Card)));
+                UnitPlayed(unitCardPlayedAction.Location, unitCardPlayedAction.Card);
+                units.Add(unitCardPlayedAction.Location, (Unit.FromCard(unitCardPlayedAction.Card)));
             } else if (action is BoardUpdateAction) {
                 var boardUpdateAction = (BoardUpdateAction)action;
-                this.BoardUpdate(boardUpdateAction.BoardStatus);
+                BoardUpdate(boardUpdateAction.BoardStatus);
             }
         }
 
         public override void Update(Dispatchable action) {
-            this.HandleAction(action);
+            HandleAction(action);
         }
 
         public static UnitStore Init() {
             return Instance;
+        }
+
+        public void RemoveUnit(Unit unit) {
+            var toRemove = units.Where(pair => pair.Value.Equals(unit)).Select(pair => pair.Key).ToList();
+            foreach (var key in toRemove) {
+                units.Remove(key);
+            }
         }
     }
 }

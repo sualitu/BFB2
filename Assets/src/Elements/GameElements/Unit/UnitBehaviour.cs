@@ -93,7 +93,7 @@ namespace BattleForBetelgeuse.GameElements.Units {
             {
                 KillUnit();
             }
-            
+            AfterTween();
         }
     }
 }

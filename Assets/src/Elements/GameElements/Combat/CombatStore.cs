@@ -14,7 +14,7 @@ namespace BattleForBetelgeuse.GameElements.Combat {
         private int position = -1;
 
         private CombatStore() {
-            this.events = new List<CombatEvent>();
+            events = new List<CombatEvent>();
         }
 
         public static CombatStore Instance {
@@ -43,25 +43,25 @@ namespace BattleForBetelgeuse.GameElements.Combat {
 
         private void HandleUnitCombatAction(UnitCombatAction action) {
             action.Wait();
-            var logEvent = this.PerformCombat(action);
-            this.events.Add(logEvent);
+            var logEvent = PerformCombat(action);
+            events.Add(logEvent);
         }
 
         public override void Update(Dispatchable action) {
             if (action is UnitCombatAction) {
                 var unitCombatAction = (UnitCombatAction)action;
-                this.HandleUnitCombatAction(unitCombatAction);
-                this.Publish();
+                HandleUnitCombatAction(unitCombatAction);
+                Publish();
             }
         }
 
         internal override void Publish() {
             base.Publish();
-            this.position++;
+            position++;
         }
 
         internal override void SendMessage(Message msg) {
-            msg(new CombatLog(this.events.ToArray(), this.position));
+            msg(new CombatLog(events.ToArray(), position));
         }
     }
 }

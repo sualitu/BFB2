@@ -1,36 +1,34 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using BattleForBetelgeuse.View;
-using System.Linq;
-using System;
-using BattleForBetelgeuse.GUI;
+﻿namespace BattleForBetelgeuse {
+    using System.Collections.Generic;
 
+    using BattleForBetelgeuse.View;
 
-namespace BattleForBetelgeuse {
+    using UnityEngine;
 
-  public class BehaviourUpdater : MonoBehaviour {
+    public class BehaviourUpdater : MonoBehaviour {
+        public static List<int> Updated = new List<int>();
 
-    public static Prefabs Prefabs { get; private set; }
+        public static List<UpdatableView> Behaviours = new List<UpdatableView>();
 
-    public static List<int> Updated = new List<int>();
-    public static List<UpdatableView> Behaviours = new List<UpdatableView>();
+        public static Prefabs Prefabs { get; private set; }
 
-    void Awake() {
-      Prefabs = GetComponent<Prefabs>();
-      GridManager.Init();
+        private void Awake() {
+            Prefabs = GetComponent<Prefabs>();
+            GridManager.Init();
+        }
+
+        private void Update() {
+            lock (Updated) {
+                var updatedCopy = new int[Updated.Count];
+                Updated.CopyTo(updatedCopy);
+                Updated.Clear();
+                foreach (var update in updatedCopy) {
+                    var subjectsToChange = Behaviours.FindAll(b => b.UniqueId() == update).GetEnumerator();
+                    while (subjectsToChange.MoveNext()) {
+                        subjectsToChange.Current.PushUpdate();
+                    }
+                }
+            }
+        }
     }
-
-    void Update() {
-      lock(Updated) {
-        foreach(var update in Updated) {
-          var subjectsToChange = Behaviours.FindAll(b => b.UniqueId() == update).GetEnumerator();
-          while(subjectsToChange.MoveNext()) { 
-            subjectsToChange.Current.PushUpdate();
-          }
-        }          
-        Updated.Clear();
-      }
-
-    }
-  }
 }

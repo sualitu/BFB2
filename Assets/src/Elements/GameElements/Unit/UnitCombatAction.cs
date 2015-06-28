@@ -2,13 +2,13 @@ namespace BattleForBetelgeuse.GameElements.Units {
     using BattleForBetelgeuse.Actions;
     using BattleForBetelgeuse.GUI.Hex;
 
-    public class UnitCombatAction : Dispatchable {
+    public class UnitCombatAction : ThrottledAction {
         public UnitCombatAction(HexCoordinate from, HexCoordinate to, Unit attacker, Unit defender) {
-            this.From = from;
-            this.To = to;
-            this.Attacker = attacker;
-            this.Defender = defender;
-            this._readyToGo.Set();
+            From = from;
+            To = to;
+            Attacker = attacker;
+            Defender = defender;
+            _readyToGo.Set();
         }
 
         public HexCoordinate From { get; private set; }
@@ -17,11 +17,11 @@ namespace BattleForBetelgeuse.GameElements.Units {
         public Unit Defender { get; private set; }
 
         public void Wait() {
-            this._readyToGo.WaitOne();
+            _readyToGo.WaitOne();
         }
 
         public override string ToString() {
-            return string.Format("[UnitCombatAction: from={0}]", this.From);
+            return string.Format("[UnitCombatAction: from={0}]", From);
         }
     }
 }

@@ -11,7 +11,13 @@
 
         internal override int TotalShots {
             get {
-                return 9;
+                return 15;
+            }
+        }
+
+        internal override CallBackStrategy CallBackStrategy {
+            get {
+                return new CallBackStrategy() { Time = 0f, Timed = false };
             }
         }
 

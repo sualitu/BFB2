@@ -1,5 +1,4 @@
 namespace BattleForBetelgeuse.Animations {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -28,9 +27,11 @@ namespace BattleForBetelgeuse.Animations {
             return new Hashtable { { "oncomplete", method } };
         }
 
-        public static void FaceHex<T>(HexCoordinate hex, T tweenableBehaviour, string callBack = null) where T : MonoBehaviour, ITweenable {
+        public static void FaceHex<T>(HexCoordinate hex, T tweenableBehaviour, string callBack = null)
+            where T : MonoBehaviour, ITweenable {
+            tweenableBehaviour.BeforeTween();
             var target = GridManager.CalculateLocationFromHexCoordinate(hex);
-            var hash = !String.IsNullOrEmpty(callBack) ? CallBackingTween(callBack) : new Hashtable();
+            var hash = !string.IsNullOrEmpty(callBack) ? CallBackingTween(callBack) : new Hashtable();
             hash.Add("looktarget", target);
             hash.Add("time", 1);
 

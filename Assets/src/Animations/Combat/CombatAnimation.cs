@@ -1,4 +1,5 @@
 ﻿namespace BattleForBetelgeuse.Animations.Combat {
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -22,6 +23,8 @@
         internal bool Shooting { get; set; }
         internal abstract int FramesBetweenShots { get; }
         internal abstract int TotalShots { get; }
+
+        internal abstract CallBackStrategy CallBackStrategy { get;  }
 
         public Transform CurrentSocket {
             get {
@@ -55,6 +58,14 @@
         private void Reset() {
             Shooting = true;
             ShotsFired = 0;
+            if (CallBackStrategy.Timed) {
+                StartCoroutine(DelayedCallBack(CallBackStrategy.Time));
+            }
+        }
+
+        private IEnumerator DelayedCallBack(float time) {
+            yield return new WaitForSeconds(time);
+            CallBack();
         }
 
         protected virtual void Setup() {}
@@ -75,11 +86,18 @@
                 ShotsFired++;
                 if (ShotsFired >= TotalShots) {
                     Shooting = false;
-                    CallBack();
+                    if (!CallBackStrategy.Timed) {
+                        CallBack();
+                    }
                 }
                 AnimateShot();
                 AdvanceSocket();
             }
         }
+    }
+
+    internal class CallBackStrategy {
+        public bool Timed { get; set; }
+        public float Time { get; set; }
     }
 }

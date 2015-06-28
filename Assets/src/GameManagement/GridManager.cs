@@ -5,9 +5,9 @@ namespace BattleForBetelgeuse {
     using UnityEngine;
 
     public class GridManager {
-        private const int MapWidth = 30;
+        private const int MapWidth = 15;
 
-        private const int MapHeight = 30;
+        private const int MapHeight = 19;
 
         private static GridManager instance;
 
@@ -51,7 +51,7 @@ namespace BattleForBetelgeuse {
                 map[i] = new TileType[MapWidth];
                 for (var j = 0; j < MapWidth; j++) {
                     var x = Random.Range(0, 100);
-                    if (x > 0) {
+                    if (x >= 0) {
                         map[i][j] = TileType.NORMAL;
                     } else {
                         map[i][j] = TileType.NONE;
