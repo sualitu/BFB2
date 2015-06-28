@@ -341,7 +341,7 @@ public class F3DAudioController : MonoBehaviour
     }
 
     // Play plasma gun shot audio at specific position
-    public void PlasmaGunShot(Vector3 pos)
+    public AudioSource PlasmaGunShot(Vector3 pos)
     {
         if (timer_01 >= plasmagunDelay)
         {
@@ -358,7 +358,10 @@ public class F3DAudioController : MonoBehaviour
 
                 timer_01 = 0f;
             }
+
+            return aSrc;
         }
+        return null;
     }
 
     // Play plasma gun hit audio at specific position
@@ -397,7 +400,7 @@ public class F3DAudioController : MonoBehaviour
 
            aLoop.pitch = Random.Range(0.95f, 1f);
            aLoop.volume = Random.Range(0.95f, 1f);
-           aLoop.loop = true;           
+           aLoop.loop = false;           
            aLoop.minDistance = 50f;           
            aLoop.Play();
        }

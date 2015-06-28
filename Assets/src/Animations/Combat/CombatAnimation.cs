@@ -7,14 +7,29 @@
     using UnityEngine;
 
     public abstract class CombatAnimation : MonoBehaviour {
+        public delegate void PostCombatCallBack();
+
         private int currentSocket;
 
-        private List<Transform> sockets;
-        internal bool Shooting { get; set; }
-
-        internal abstract int FramesBetweenShots { get; }
-
         private int frameCount;
+
+        protected int ShotsFired;
+
+        private List<Transform> sockets;
+
+        protected Vector3 Target;
+
+        internal bool Shooting { get; set; }
+        internal abstract int FramesBetweenShots { get; }
+        internal abstract int TotalShots { get; }
+
+        public Transform CurrentSocket {
+            get {
+                return sockets[currentSocket];
+            }
+        }
+
+        public PostCombatCallBack CallBack { get; set; }
 
         private void Awake() {
             Shooting = false;
@@ -30,13 +45,19 @@
             currentSocket = (currentSocket + 1) % sockets.Count;
         }
 
-        public Transform CurrentSocket {
-            get {
-                return sockets[currentSocket];
-            }
+        public void CombatWith(Vector3 target, PostCombatCallBack callBack) {
+            CallBack = callBack;
+            Target = target;
+            Reset();
+            Setup();
         }
 
-        public abstract void CombatWith(Transform target);
+        private void Reset() {
+            Shooting = true;
+            ShotsFired = 0;
+        }
+
+        protected virtual void Setup() {}
 
         internal bool ShootAgain() {
             frameCount ++;
@@ -45,6 +66,20 @@
             }
             frameCount = 0;
             return true;
+        }
+
+        protected abstract void AnimateShot();
+
+        private void Update() {
+            if (Shooting && ShootAgain()) {
+                ShotsFired++;
+                if (ShotsFired >= TotalShots) {
+                    Shooting = false;
+                    CallBack();
+                }
+                AnimateShot();
+                AdvanceSocket();
+            }
         }
     }
 }

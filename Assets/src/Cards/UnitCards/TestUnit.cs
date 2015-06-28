@@ -14,7 +14,7 @@ namespace BattleForBetelgeuse.Cards.UnitCards {
 
         public override int Attack {
             get {
-                return 4;
+                return 1;
             }
         }
 

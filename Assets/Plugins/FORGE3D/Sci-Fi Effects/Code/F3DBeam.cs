@@ -29,6 +29,8 @@ public class F3DBeam : MonoBehaviour
     float beamLength;               // Current beam length
     float initialBeamOffset;        // Initial UV offset 
 
+    public float Scale = .2f;
+
     void Awake()
     {
         // Get line renderer component
@@ -37,7 +39,7 @@ public class F3DBeam : MonoBehaviour
         // Assign first frame texture
         if (!AnimateUV && BeamFrames.Length > 0)
             lineRenderer.material.mainTexture = BeamFrames[0];
-
+        lineRenderer.SetWidth(Scale, Scale);
         // Randomize uv offset
         initialBeamOffset = Random.Range(0f, 5f);
     }

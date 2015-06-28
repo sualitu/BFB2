@@ -1,27 +1,26 @@
-﻿namespace BattleForBetelgeuse.Animations.Combat {
-    using UnityEngine;
+﻿namespace BattleForBetelgeuse.Animations.Comba {
 
-    public class PlasmaGun : CombatAnimation {
-        
+    using BattleForBetelgeuse.Animations.Combat;
+
+    internal class PlasmaRay : CombatAnimation {
         internal override int FramesBetweenShots {
             get {
-                return Random.Range(7,9);
+                return 0;
             }
         }
 
         internal override int TotalShots {
             get {
-                return 9;
+                return 1;
             }
         }
 
         protected override void AnimateShot() {
-            F3DPool.instance.Spawn(BehaviourUpdater.Prefabs.PlasmaMuzzle,
+            F3DPool.instance.Spawn(BehaviourUpdater.Prefabs.PlasmaRay,
                                    CurrentSocket.position,
                                    CurrentSocket.rotation,
                                    null);
-
-            F3DAudioController.instance.PlasmaGunShot(CurrentSocket.position);
+            F3DAudioController.instance.PlasmaBeamLoop(CurrentSocket.position, CurrentSocket);
         }
     }
 }

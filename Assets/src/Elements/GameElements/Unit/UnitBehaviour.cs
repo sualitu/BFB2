@@ -6,6 +6,8 @@ namespace BattleForBetelgeuse.GameElements.Units {
     using BattleForBetelgeuse.TweenInteraction;
     using BattleForBetelgeuse.View;
 
+    using UnityEngine;
+
     public class UnitBehaviour : ViewBehaviour<UnitView>, ITweenable {
         private CombatAnimation combatAnimation;
 
@@ -21,62 +23,77 @@ namespace BattleForBetelgeuse.GameElements.Units {
 
         private void Start() {
             BehaviourUpdater.Behaviours.Add(this);
-            this.gameObject.name = "Unit:" + this.UniqueId();
-            this.gameObject.tag = "Unit";
-            this.Companion = new UnitView(this.Coordinate);
-            this.combatAnimation = this.GetComponentInChildren<CombatAnimation>();
+            gameObject.name = "Unit:" + UniqueId();
+            gameObject.tag = "Unit";
+            Companion = new UnitView(Coordinate);
+            combatAnimation = GetComponentInChildren<CombatAnimation>();
         }
 
         public void MoveTo(HexCoordinate coordinate) {
-            this.MoveTo(coordinate, Settings.Animations.AnimateMovement);
+            MoveTo(coordinate, Settings.Animations.AnimateMovement);
         }
 
         public void MoveTo(HexCoordinate coordinate, bool animate) {
             if (!animate) {
-                this.gameObject.transform.position = GridManager.CalculateLocationFromHexCoordinate(coordinate);
+                gameObject.transform.position = GridManager.CalculateLocationFromHexCoordinate(coordinate);
             } else {
-                Movement.MoveAlongPath(this.Companion.Path, this);
+                Movement.MoveAlongPath(Companion.Path, this);
             }
-            this.CheckCombat();
+            CheckCombat();
         }
 
         private void CheckCombat() {
-            if (this.Companion.AttackTarget != null) {
-                new UnitCombatAction(this.Companion.Coordinate,
-                                     this.Companion.AttackTarget,
-                                     UnitStore.Instance.UnitAtTile(this.Companion.Coordinate),
-                                     UnitStore.Instance.UnitAtTile(this.Companion.AttackTarget));
-                this.Companion.AttackTarget = null;
+            if (Companion.AttackTarget != null) {
+                new UnitCombatAction(Companion.Coordinate,
+                                     Companion.AttackTarget,
+                                     UnitStore.Instance.UnitAtTile(Companion.Coordinate),
+                                     UnitStore.Instance.UnitAtTile(Companion.AttackTarget));
+                Companion.AttackTarget = null;
             }
         }
 
         public void KillUnit() {
-            this.KillUnit(Settings.Animations.AnimateDeath);
+            KillUnit(Settings.Animations.AnimateDeath);
         }
 
         public void KillUnit(bool animate) {
             if (animate) {
-                Explosions.MeshExplosion(this.gameObject);
-                Explosions.TinyExplosion(this.gameObject);
+                Explosions.MeshExplosion(gameObject);
+                Explosions.TinyExplosion(gameObject);
             }
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
 
         public override void PushUpdate() {
-            if (this.Companion.HasMoved) {
-                this.MoveTo(this.Companion.Coordinate);
+            if (Companion.HasMoved) {
+                MoveTo(Companion.Coordinate);
             }
-            if (!this.Companion.Alive) {
-                this.KillUnit();
-            }
-            this.CheckCombat();
-            if (this.Companion.CombatTarget != null && Settings.Animations.AnimateCombat) {
-                this.AnimateCombat();
+            CheckCombat();
+            if (Companion.CombatTarget != null) {
+                PerformCombat();
             }
         }
 
-        private void AnimateCombat() {
-            this.combatAnimation.CombatWith(null);
+        private void PerformCombat() {
+            if (Settings.Animations.AnimateCombat) {
+                Movement.FaceHex(Companion.CombatTarget, this, "BeginCombat");
+            } else {
+                CallBack();
+            }
+        }
+
+        private void BeginCombat() {
+            combatAnimation.CombatWith(GridManager.CalculateLocationFromHexCoordinate(Companion.CombatTarget), CallBack);
+        }
+
+        private void CallBack()
+        {
+            Companion.CombatTarget = null;
+            if (!Companion.Alive)
+            {
+                KillUnit();
+            }
+            
         }
     }
 }
