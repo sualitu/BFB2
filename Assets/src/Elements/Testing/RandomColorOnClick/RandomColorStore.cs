@@ -1,45 +1,42 @@
-using BattleForBetelgeuse.View;
-using BattleForBetelgeuse.Actions;
-using BattleForBetelgeuse.Dispatching;
-using System.Collections.Generic;
-using UnityEngine;
-
 using Rnd = System.Random;
-using BattleForBetelgeuse.Publishing;
 
 namespace BattleForBetelgeuse.Stores {
+    using BattleForBetelgeuse.Actions;
 
-  public class RandomColorStore : PublishingStore<Color> {
+    using UnityEngine;
 
-    Color color;
-    private static RandomColorStore instance;
-    
-    public static RandomColorStore Instance { 
-      get {
-        if(instance == null) {
-          instance = new RandomColorStore();
+    public class RandomColorStore : PublishingStore<Color> {
+        private static RandomColorStore instance;
+
+        private readonly Rnd rnd;
+
+        private Color color;
+
+        private RandomColorStore() {
+            this.color = Color.black;
+            this.rnd = new Rnd();
         }
-        return instance;
-      } 
-    }
 
-    Rnd rnd;
+        public static RandomColorStore Instance {
+            get {
+                if (instance == null) {
+                    instance = new RandomColorStore();
+                }
+                return instance;
+            }
+        }
 
-    private RandomColorStore() : base() {
-      color = Color.black;
-      rnd = new Rnd();
-    }
+        internal override void SendMessage(Message msg) {
+            msg(this.color);
+        }
 
-    internal override void SendMessage(Message msg) {
-      msg(color);
+        public override void Update(Dispatchable action) {
+            if (action is RandomColorOnClickAction) {
+                this.color = new Color((float)this.rnd.NextDouble(),
+                                       (float)this.rnd.NextDouble(),
+                                       (float)this.rnd.NextDouble());
+                this.Publish();
+            }
+        }
     }
-
-    public override void Update(Dispatchable action) {
-      if(action is RandomColorOnClickAction) {
-        color = new Color((float)rnd.NextDouble(), (float)rnd.NextDouble(), (float)rnd.NextDouble());
-        Publish();
-      }
-    }
-  }
 }
-

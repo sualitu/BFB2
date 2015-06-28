@@ -1,15 +1,12 @@
-using BattleForBetelgeuse.GUI.Hex;
-using System.Collections.Generic;
-
 namespace BattleForBetelgeuse.GameElements.Units {
+    using System.Collections.Generic;
 
-  public class UnitChange {
-    public HexCoordinate From { get; set; }
+    using BattleForBetelgeuse.GUI.Hex;
 
-    public HexCoordinate To { get; set; }
-
-    public HexCoordinate Attack { get; set; }
-
-    public List<HexCoordinate> Path { get; set; }
-  }
+    public class UnitChange {
+        public HexCoordinate From { get; set; }
+        public HexCoordinate To { get; set; }
+        public HexCoordinate Attack { get; set; }
+        public List<HexCoordinate> Path { get; set; }
+    }
 }

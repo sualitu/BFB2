@@ -1,58 +1,57 @@
-using System.Collections.Generic;
-using System;
-using System.Collections;
-using BattleForBetelgeuse.GameElements.Combat.Events;
-
 namespace BattleForBetelgeuse.GameElements.Combat {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
 
-  public class CombatLog : IEnumerator<CombatEvent> {
+    using BattleForBetelgeuse.GameElements.Combat.Events;
 
-    private CombatEvent[] _log;
+    public class CombatLog : IEnumerator<CombatEvent> {
+        private readonly CombatEvent[] _log;
 
-    private int _startPosition;
-    private int _currentPosition;
+        private readonly int startPosition;
 
-    public CombatLog(CombatEvent[] log, int startPosition = -1) {
-      _startPosition = startPosition;
-      _currentPosition = startPosition;
-      _log = log;
-    }
+        private int currentPosition;
 
-    public bool MoveNext() {
-      _currentPosition ++;
-      return _currentPosition < _log.Length;
-    }
-
-    public void Reset() {
-      _currentPosition = _startPosition;
-    }
-
-    public void FromTheBeginningOfTime() {
-      _currentPosition = -1;
-    }
-
-    public void Dispose() { }
-
-    public CombatEvent Current {
-      get {
-        try {
-          return _log[_currentPosition];
-        } catch(IndexOutOfRangeException) {
-          throw new InvalidOperationException(String.Format("No event in combat log at position {0}", _currentPosition));
+        public CombatLog(CombatEvent[] log, int startPosition = -1) {
+            this.startPosition = startPosition;
+            this.currentPosition = startPosition;
+            this._log = log;
         }
-      }
-    }    
-    
-    object IEnumerator.Current {
-      get {
-        return this.Current;
-      }
-    }
 
-    public override string ToString() {
-      return string.Format("CombatLog with length {0} at position {1}", _log.Length, _currentPosition);
+        public bool MoveNext() {
+            this.currentPosition ++;
+            return this.currentPosition < this._log.Length;
+        }
+
+        public void Reset() {
+            this.currentPosition = this.startPosition;
+        }
+
+        public void Dispose() {}
+
+        public CombatEvent Current {
+            get {
+                try {
+                    return this._log[this.currentPosition];
+                } catch (IndexOutOfRangeException) {
+                    throw new InvalidOperationException(string.Format("No event in combat log at position {0}",
+                                                                      this.currentPosition));
+                }
+            }
+        }
+
+        object IEnumerator.Current {
+            get {
+                return this.Current;
+            }
+        }
+
+        public void FromTheBeginningOfTime() {
+            this.currentPosition = -1;
+        }
+
+        public override string ToString() {
+            return string.Format("CombatLog with length {0} at position {1}", this._log.Length, this.currentPosition);
+        }
     }
-    
-  }
 }
-

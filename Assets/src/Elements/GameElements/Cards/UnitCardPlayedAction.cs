@@ -1,12 +1,9 @@
-using BattleForBetelgeuse.GUI.Hex;
-using BattleForBetelgeuse.Cards.UnitCards;
-
 namespace BattleForBetelgeuse.GameElements.Cards {
-  
-  public class UnitCardPlayedAction : CardPlayedAction<UnitCard> {
+    using BattleForBetelgeuse.Cards.UnitCards;
+    using BattleForBetelgeuse.GUI.Hex;
 
-    public UnitCardPlayedAction(HexCoordinate location, UnitCard card) : base(location, card) {
-      
+    public class UnitCardPlayedAction : CardPlayedAction<UnitCard> {
+        public UnitCardPlayedAction(HexCoordinate location, UnitCard card)
+            : base(location, card) {}
     }
-  }
 }

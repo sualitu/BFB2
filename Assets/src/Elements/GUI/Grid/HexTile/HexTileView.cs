@@ -1,35 +1,30 @@
-using BattleForBetelgeuse.View.Clickable;
-using BattleForBetelgeuse.Actions;
-using UnityEngine;
-using BattleForBetelgeuse.GUI.Board;
-
 namespace BattleForBetelgeuse.GUI.Hex {
+    using BattleForBetelgeuse.GUI.Board;
+    using BattleForBetelgeuse.View.Clickable;
 
-  public class HexTileView : ClickableView {
+    using UnityEngine;
 
-    public Color Color { get; set; }
+    public class HexTileView : ClickableView {
+        public HexTileView() {
+            BoardStore.Instance.Subscribe(this.CheckSelected);
+        }
 
-    internal HexCoordinate Coordinate { get; set; }
+        public Color Color { get; set; }
+        internal HexCoordinate Coordinate { get; set; }
 
-    public HexTileView() {
-      BoardStore.Instance.Subscribe(CheckSelected);
+        public override void LeftClicked() {
+            new HexTileClickedAction(this.Coordinate);
+        }
+
+        public void CheckSelected(BoardStatus status) {
+            if (this.Coordinate.Equals(status.CurrentSelection)) {
+                this.Color = Color.green;
+            } else if (this.Coordinate.Equals(status.PreviousSelection)) {
+                this.Color = Settings.ColorSettings.TileBaseColor;
+            } else {
+                return;
+            }
+            this.UpdateBehaviour();
+        }
     }
-
-    public override void LeftClicked() {
-      new HexTileClickedAction(Coordinate);
-    }
-
-   public void CheckSelected(BoardStatus status) {
-      if(Coordinate.Equals(status.CurrentSelection)) {
-        Color = Color.green;
-      } else if (Coordinate.Equals(status.PreviousSelection)) {
-        Color = Settings.ColorSettings.TileBaseColor;
-      } else {
-        return;
-      }
-      UpdateBehaviour();
-    }
-  }
-
 }
-

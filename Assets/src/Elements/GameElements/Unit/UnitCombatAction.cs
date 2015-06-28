@@ -1,69 +1,27 @@
-using BattleForBetelgeuse.GUI.Hex;
-using BattleForBetelgeuse.Actions;
-
 namespace BattleForBetelgeuse.GameElements.Units {
+    using BattleForBetelgeuse.Actions;
+    using BattleForBetelgeuse.GUI.Hex;
 
-  public class UnitCombatAction : Dispatchable {
-    HexCoordinate from;
+    public class UnitCombatAction : Dispatchable {
+        public UnitCombatAction(HexCoordinate from, HexCoordinate to, Unit attacker, Unit defender) {
+            this.From = from;
+            this.To = to;
+            this.Attacker = attacker;
+            this.Defender = defender;
+            this._readyToGo.Set();
+        }
 
-    public HexCoordinate From {
-      get {
-        return from;
-      }
-      private set {
-        from = value;
-      }
+        public HexCoordinate From { get; private set; }
+        public HexCoordinate To { get; private set; }
+        public Unit Attacker { get; private set; }
+        public Unit Defender { get; private set; }
+
+        public void Wait() {
+            this._readyToGo.WaitOne();
+        }
+
+        public override string ToString() {
+            return string.Format("[UnitCombatAction: from={0}]", this.From);
+        }
     }
-    HexCoordinate to;
-    
-    public HexCoordinate To {
-      get {
-        return to;
-      }
-      private set {
-        to = value;
-      }
-    }
-    Unit attacker;
-
-    public Unit Attacker {
-      get {
-        return attacker;
-      }
-      private set {
-        attacker = value;
-      }
-    }
-
-    Unit defender;
-
-    public Unit Defender {
-      get {
-        return defender;
-      }
-      private set {
-        defender = value;
-      }
-    }
-
-    public void Wait() {
-      _readyToGo.WaitOne();
-    }
-
-    public UnitCombatAction(HexCoordinate from, HexCoordinate to, Unit attacker, Unit defender) {
-      From = from;
-      To = to;
-      Attacker = attacker;
-      Defender = defender;
-      _readyToGo.Set();
-    }
-
-    public override string ToString() {
-      return string.Format("[UnitCombatAction: from={0}]", from);
-    }
-    
-  }
-
-
 }
-
