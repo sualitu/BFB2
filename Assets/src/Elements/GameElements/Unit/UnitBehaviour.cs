@@ -6,8 +6,6 @@ namespace BattleForBetelgeuse.GameElements.Units {
     using BattleForBetelgeuse.TweenInteraction;
     using BattleForBetelgeuse.View;
 
-    using UnityEngine;
-
     public class UnitBehaviour : ViewBehaviour<UnitView>, ITweenable {
         private CombatAnimation combatAnimation;
 
@@ -18,7 +16,22 @@ namespace BattleForBetelgeuse.GameElements.Units {
         }
 
         public void AfterTween() {
+            StopThrusters();
             new UnpauseDispatchingAction();
+        }
+
+        private void StartThrusters() {
+            var thrusters = GetComponentsInChildren<SU_Thruster>();
+            foreach (var thruster in thrusters) {
+                thruster.StartThruster();
+            }
+        }
+
+        private void StopThrusters() {
+            var thrusters = GetComponentsInChildren<SU_Thruster>();
+            foreach (var thruster in thrusters) {
+                thruster.StopThruster();
+            }
         }
 
         private void Start() {
@@ -37,6 +50,7 @@ namespace BattleForBetelgeuse.GameElements.Units {
             if (!animate) {
                 gameObject.transform.position = GridManager.CalculateLocationFromHexCoordinate(coordinate);
             } else {
+                StartThrusters();
                 Movement.MoveAlongPath(Companion.Path, this);
             }
             CheckCombat();
@@ -86,11 +100,9 @@ namespace BattleForBetelgeuse.GameElements.Units {
             combatAnimation.CombatWith(GridManager.CalculateLocationFromHexCoordinate(Companion.CombatTarget), CallBack);
         }
 
-        private void CallBack()
-        {
+        private void CallBack() {
             Companion.CombatTarget = null;
-            if (!Companion.Alive)
-            {
+            if (!Companion.Alive) {
                 KillUnit();
             }
             AfterTween();

@@ -1,18 +1,16 @@
 namespace BattleForBetelgeuse {
+    using System.IO;
+
     using BattleForBetelgeuse.GameElements.Units;
     using BattleForBetelgeuse.GUI.Hex;
 
     using UnityEngine;
 
     public class GridManager {
-        private const int MapWidth = 15;
-
-        private const int MapHeight = 19;
-
         private static GridManager instance;
 
         private readonly GameObject hexPrefab;
-         
+
         private float hexHeight;
 
         private float hexWidth;
@@ -38,32 +36,47 @@ namespace BattleForBetelgeuse {
         private void BuildGrid() {
             for (var i = 0; i < map.Length; i++) {
                 for (var j = 0; j < map[i].Length; j++) {
-                    if (map[i][j] == TileType.NORMAL) {
-                        InstantiateHexAt(i, j);
+                    if (map[i][j] == TileType.Normal) {
+                        InstantiateHexAt(j, i);
                     }
                 }
             }
         }
 
         private void BuildMap() {
-            map = new TileType[MapHeight][];
-            for (var i = 0; i < MapHeight; i++) {
-                map[i] = new TileType[MapWidth];
-                for (var j = 0; j < MapWidth; j++) {
-                    var x = Random.Range(0, 100);
-                    if (x >= 0) {
-                        map[i][j] = TileType.NORMAL;
-                    } else {
-                        map[i][j] = TileType.NONE;
+            try {
+                var json = JSONObject.Create(File.ReadAllText(@"maps/StandardMap.json"));
+
+                var heightJson = json["height"].ToString();
+                var widthJson = json["width"].ToString();
+                var height = int.Parse(heightJson);
+                var width = int.Parse(widthJson);
+
+                var data = json["layers"][0]["data"];
+
+                map = new TileType[height][];
+
+                for (int i = 0, k = 0; i < height; i++) {
+                    map[i] = new TileType[width];
+                    for (var j = 0; j < width; j++) {
+                        var x = int.Parse(data[k].ToString());
+                        if (x != 14) {
+                            map[i][j] = TileType.Normal;
+                        } else {
+                            map[i][j] = TileType.None;
+                        }
+                        k++;
                     }
                 }
+            } catch {
+                Debug.Log("Parsing of map failed");
             }
         }
 
         public bool MoveableHex(HexCoordinate hex) {
             try {
-                var type = map[hex.X][hex.Y];
-                return type == TileType.NORMAL && !UnitStore.Instance.IsUnitAtTile(hex);
+                var type = map[hex.Y][hex.X];
+                return type != TileType.None && !UnitStore.Instance.IsUnitAtTile(hex);
             } catch {
                 return false;
             }
@@ -97,8 +110,16 @@ namespace BattleForBetelgeuse {
     }
 
     internal enum TileType {
-        NORMAL,
+        Normal,
 
-        NONE
+        None,
+
+        Base,
+
+        Flag,
+
+        Event,
+
+        NpcCamp
     }
 }

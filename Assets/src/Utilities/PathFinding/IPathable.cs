@@ -1,14 +1,11 @@
-using System.Collections.Generic;
-
 namespace BattleForBetelgeuse.PathFinding {
+    using System.Collections.Generic;
 
-  public interface IPathable {
+    public interface IPathable {
+        IList<T> Neighbors<T>();
 
-    IList<T> Neighbors<T>();
+        bool IsMoveable();
 
-    bool IsMoveable();
-
-    int EstimateCostTo(IPathable goal);
-  }
+        int EstimateCostTo(IPathable goal);
+    }
 }
-

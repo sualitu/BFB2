@@ -14,8 +14,8 @@
 
         private void Start() {
             UnitStore.Init();
-            new UnitCardPlayedAction(new HexCoordinate(1, 1), new TestUnit());
-            new UnitCardPlayedAction(new HexCoordinate(2, 3), new TestUnit());
+            new UnitCardPlayedAction(new HexCoordinate(14, 7), new TestUnit());
+            new UnitCardPlayedAction(new HexCoordinate(5, 14), new TestUnit());
             new UnitCardPlayedAction(new HexCoordinate(5, 5), new BeamTestUnit());
         }
 

@@ -12,33 +12,33 @@ namespace BattleForBetelgeuse.GUI.Hex {
         public HexCoordinate Coordinate { get; set; }
 
         public void MouseOver() {
-            this.ColorTemporarily(Color.red);
+            ColorTemporarily(Color.red);
         }
 
         public void MouseOut() {
-            this.UpdateColor(this.NonTempColor);
+            UpdateColor(NonTempColor);
         }
 
         public void UpdateColor(Color color) {
-            this.NonTempColor = color;
-            this.rend.material.SetColor("_Color", color);
+            NonTempColor = color;
+            rend.material.SetColor("_Color", color);
         }
 
         public void ColorTemporarily(Color color) {
-            this.rend.material.SetColor("_Color", color);
+            rend.material.SetColor("_Color", color);
         }
 
         private void Start() {
             BehaviourUpdater.Behaviours.Add(this);
-            this.Companion = new HexTileView();
-            this.Companion.Coordinate = this.Coordinate;
-            this.rend = this.GetComponent<Renderer>();
-            this.gameObject.name = "Hex:" + this.UniqueId();
-            this.gameObject.tag = "HexTile";
+            Companion = new HexTileView();
+            Companion.Coordinate = Coordinate;
+            rend = GetComponent<Renderer>();
+            gameObject.name = "Hex:" + UniqueId();
+            gameObject.tag = "HexTile";
         }
 
         public override void PushUpdate() {
-            this.UpdateColor(this.Companion.Color);
+            UpdateColor(Companion.Color);
         }
     }
 }

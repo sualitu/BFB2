@@ -8,24 +8,24 @@ namespace BattleForBetelgeuse.GUI.Hex {
 
     public class HexCoordinate : IPathable {
         public HexCoordinate(int x, int y) {
-            this.X = x;
-            this.Y = y;
+            X = x;
+            Y = y;
         }
 
         public int X { get; private set; }
         public int Y { get; private set; }
 
-        public IList<IPathable> Neighbors<IPathable>() {
-            var xAdjustment = this.Y % 2 == 0 ? 0 : -1;
+        public IList<T> Neighbors<T>() {
+            var xAdjustment = Y % 2 == 0 ? 0 : -1;
             var neighbors = new List<HexCoordinate> {
-                new HexCoordinate(this.X - 1, this.Y),
-                new HexCoordinate(this.X + 1, this.Y),
-                new HexCoordinate(this.X + xAdjustment, this.Y - 1),
-                new HexCoordinate(this.X + xAdjustment, this.Y + 1),
-                new HexCoordinate(this.X + 1 + xAdjustment, this.Y - 1),
-                new HexCoordinate(this.X + 1 + xAdjustment, this.Y + 1)
+                new HexCoordinate(X - 1, Y),
+                new HexCoordinate(X + 1, Y),
+                new HexCoordinate(X + xAdjustment, Y - 1),
+                new HexCoordinate(X + xAdjustment, Y + 1),
+                new HexCoordinate(X + 1 + xAdjustment, Y - 1),
+                new HexCoordinate(X + 1 + xAdjustment, Y + 1)
             };
-            return neighbors.Cast<IPathable>().ToList();
+            return neighbors.Cast<T>().ToList();
         }
 
         public bool IsMoveable() {
@@ -33,12 +33,12 @@ namespace BattleForBetelgeuse.GUI.Hex {
         }
 
         public int EstimateCostTo(IPathable goal) {
-            return this.EstimateCostTo((HexCoordinate)goal);
+            return EstimateCostTo((HexCoordinate)goal);
         }
 
         public int EstimateCostTo(HexCoordinate goal) {
-            var deltaX = this.X - goal.X;
-            var deltaY = this.Y - goal.Y;
+            var deltaX = X - goal.X;
+            var deltaY = Y - goal.Y;
             var d = Mathf.CeilToInt(Mathf.Sqrt(Mathf.Pow(deltaX, 2) + Mathf.Pow(deltaY, 2)));
             return d;
         }
@@ -55,20 +55,20 @@ namespace BattleForBetelgeuse.GUI.Hex {
             }
             if (obj is HexCoordinate) {
                 var other = (HexCoordinate)obj;
-                return other.X == this.X && other.Y == this.Y;
+                return other.X == X && other.Y == Y;
             }
             return false;
         }
 
         public override int GetHashCode() {
             var hash = 7;
-            hash = 71 * hash + this.X;
-            hash = 71 * hash + this.Y;
+            hash = 71 * hash + X;
+            hash = 71 * hash + Y;
             return hash;
         }
 
         public override string ToString() {
-            return string.Format("[HexCoordinate: X={0}, Y={1}]", this.X, this.Y);
+            return string.Format("[HexCoordinate: X={0}, Y={1}]", X, Y);
         }
     }
 }
