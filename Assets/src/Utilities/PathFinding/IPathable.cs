@@ -1,4 +1,4 @@
-namespace BattleForBetelgeuse.PathFinding {
+namespace Assets.Utilities.PathFinding {
     using System.Collections.Generic;
 
     public interface IPathable {

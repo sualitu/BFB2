@@ -1,7 +1,7 @@
-namespace BattleForBetelgeuse.PathFinding {
+namespace Assets.Utilities.PathFinding {
 
   public class PathNotFoundException : System.Exception {
-    public PathNotFoundException(string message) {
+    public PathNotFoundException(string message) : base(message) {
     }
   }
 
