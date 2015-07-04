@@ -1,8 +1,8 @@
-namespace Assets.Elements.GameElements.Combat {
+namespace Assets.BattleForBetelgeuse.FluxElements.Combat {
     using System.Collections.Generic;
 
-    using Assets.Elements.GameElements.Combat.Events;
-    using Assets.Elements.GameElements.Unit;
+    using Assets.BattleForBetelgeuse.FluxElements.Combat.Events;
+    using Assets.BattleForBetelgeuse.FluxElements.Unit;
     using Assets.Flux.Actions;
     using Assets.Flux.Stores;
 

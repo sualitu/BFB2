@@ -1,11 +1,11 @@
-namespace Assets.Elements.GameElements.Unit {
-    using Assets.Animations;
-    using Assets.Animations.Combat;
-    using Assets.Elements.GUI.Grid.HexTile;
+namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
+    using Assets.BattleForBetelgeuse.Animations;
+    using Assets.BattleForBetelgeuse.Animations.Combat;
+    using Assets.BattleForBetelgeuse.Animations.TweenInteraction;
+    using Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile;
+    using Assets.BattleForBetelgeuse.Management;
     using Assets.Flux.Actions.DispatcherActions;
-    using Assets.Flux.TweenInteraction;
     using Assets.Flux.Views;
-    using Assets.GameManagement;
 
     public class UnitBehaviour : ViewBehaviour<UnitView>, ITweenable {
         private CombatAnimation combatAnimation;

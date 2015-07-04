@@ -1,8 +1,9 @@
-﻿namespace Assets.Animations.Combat {
+﻿namespace Assets.BattleForBetelgeuse.Animations.Combat {
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
+    using Assets.BattleForBetelgeuse.Management;
     using Assets.GameManagement;
 
     using UnityEngine;

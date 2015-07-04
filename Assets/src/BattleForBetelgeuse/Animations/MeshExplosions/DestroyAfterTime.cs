@@ -2,13 +2,15 @@ using System.Collections;
 
 using UnityEngine;
 
-public class DestroyAfterTime : MonoBehaviour {
+namespace Assets.BattleForBetelgeuse.Animations.MeshExplosions {
+    public class DestroyAfterTime : MonoBehaviour {
 	
-	public float waitTime;
+        public float waitTime;
 	
-	IEnumerator Start() {
-		yield return new WaitForSeconds(waitTime);
-		GameObject.Destroy(gameObject);
-	}
+        IEnumerator Start() {
+            yield return new WaitForSeconds(waitTime);
+            GameObject.Destroy(gameObject);
+        }
 	
+    }
 }

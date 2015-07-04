@@ -1,10 +1,10 @@
-namespace Assets.Elements.GUI.Grid.HexTile {
+namespace Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile {
     using System.Collections.Generic;
     using System.Linq;
 
-    using Assets.GameManagement;
+    using Assets.BattleForBetelgeuse.Management;
     using Assets.Utilities.PathFinding;
-    
+
     using UnityEngine;
 
     public class HexCoordinate : IPathable {

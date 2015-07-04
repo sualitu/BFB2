@@ -1,4 +1,4 @@
-namespace Assets.GameManagement {
+namespace Assets.BattleForBetelgeuse.Management {
     using UnityEngine;
 
     public class Settings {

@@ -1,10 +1,10 @@
-﻿namespace Assets.GameManagement {
+﻿namespace Assets.BattleForBetelgeuse.Management {
     using System.Collections.Generic;
 
-    using Assets.Cards.UnitCards;
-    using Assets.Elements.GameElements.Cards;
-    using Assets.Elements.GameElements.Unit;
-    using Assets.Elements.GUI.Grid.HexTile;
+    using Assets.BattleForBetelgeuse.Cards.UnitCards;
+    using Assets.BattleForBetelgeuse.FluxElements.Cards;
+    using Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile;
+    using Assets.BattleForBetelgeuse.FluxElements.Unit;
     using Assets.Utilities;
 
     using UnityEngine;

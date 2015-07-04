@@ -1,7 +1,7 @@
-namespace Assets.Elements.GUI.Grid.Board {
+namespace Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.Board {
     using System.Collections.Generic;
 
-    using Assets.Elements.GUI.Grid.HexTile;
+    using Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile;
 
     public class BoardStatus {
         private List<HexCoordinate> path = new List<HexCoordinate>();

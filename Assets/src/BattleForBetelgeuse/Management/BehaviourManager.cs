@@ -1,4 +1,4 @@
-﻿namespace Assets.GameManagement {
+﻿namespace Assets.BattleForBetelgeuse.Management {
     using System.Collections.Generic;
 
     using Assets.Flux.Views;

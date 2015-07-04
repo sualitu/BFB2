@@ -1,8 +1,8 @@
-﻿namespace Assets.GameManagement {
+﻿namespace Assets.BattleForBetelgeuse.Management.Input {
     using System.Collections.Generic;
 
+    using Assets.BattleForBetelgeuse.Interactable.MouseInteraction;
     using Assets.Flux.Actions;
-    using Assets.Flux.Interactable.MouseInteraction;
 
     using UnityEngine;
 

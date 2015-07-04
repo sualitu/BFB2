@@ -1,8 +1,8 @@
-namespace Assets.Elements.GUI.Grid.HexTile {
-    using Assets.Flux.Interactable.Clickable;
-    using Assets.Flux.Interactable.MouseInteraction;
-    using Assets.GameManagement;
-    
+namespace Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile {
+    using Assets.BattleForBetelgeuse.Interactable.Clickable;
+    using Assets.BattleForBetelgeuse.Interactable.MouseInteraction;
+    using Assets.BattleForBetelgeuse.Management;
+
     using UnityEngine;
 
     public class HexTileBehaviour : ClickableViewBehaviour<HexTileView>, IMouseOverable {

@@ -1,9 +1,9 @@
-namespace Assets.Elements.GameElements.Unit {
+namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
     using System.Collections.Generic;
 
-    using Assets.Elements.GameElements.Combat;
-    using Assets.Elements.GameElements.Combat.Events;
-    using Assets.Elements.GUI.Grid.HexTile;
+    using Assets.BattleForBetelgeuse.FluxElements.Combat;
+    using Assets.BattleForBetelgeuse.FluxElements.Combat.Events;
+    using Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile;
     using Assets.Flux.Views;
 
     public class UnitView : BehaviourUpdatingView {

@@ -1,4 +1,4 @@
-namespace Assets.Elements.Playground.RandomColorOnClick {
+namespace Assets.BattleForBetelgeuse.Playground.RandomColorOnClick {
     using Assets.Flux.Actions;
 
     public class RandomColorOnClickAction : UnpausableAction {}

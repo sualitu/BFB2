@@ -1,6 +1,6 @@
-﻿namespace Assets.Cards.UnitCards {
+﻿namespace Assets.BattleForBetelgeuse.Cards.UnitCards {
     using Assets.GameManagement;
-    
+
     public abstract class UnitCard : Card {
         private readonly string prefabLocation = "Units/";
 

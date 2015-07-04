@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+using Assets.BattleForBetelgeuse.Animations.Environment.Discs;
+
 [ExecuteInEditMode]
 [AddComponentMenu(SgtHelper.ComponentMenuPrefix + "Ring")]
 public class SgtRing : MonoBehaviour

@@ -1,4 +1,4 @@
-namespace Assets.Elements.GameElements.Combat.Events {
+namespace Assets.BattleForBetelgeuse.FluxElements.Combat.Events {
     public abstract class CombatEvent {
         public CombatEvent(long time) {
             this.Time = time;

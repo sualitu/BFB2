@@ -1,4 +1,4 @@
-﻿namespace Assets.Cards.UnitCards {
+﻿namespace Assets.BattleForBetelgeuse.Cards.UnitCards {
     public class BeamTestUnit : UnitCard {
         public override int ManaCost {
             get {

@@ -1,4 +1,4 @@
-namespace Assets.Elements.GUI.Grid.HexTile {
+namespace Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile {
     using Assets.Flux.Actions;
 
     public class HexTileClickedAction : UnpausableAction {

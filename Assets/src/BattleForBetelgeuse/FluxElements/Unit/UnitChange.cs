@@ -1,8 +1,8 @@
-namespace Assets.Elements.GameElements.Unit {
+namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
     using System.Collections.Generic;
 
-    using Assets.Elements.GUI.Grid.HexTile;
-    using Assets.GameManagement;
+    using Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile;
+    using Assets.BattleForBetelgeuse.FluxElements.Player;
 
     public class UnitChange {
         public HexCoordinate From { get; set; }

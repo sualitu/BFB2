@@ -1,10 +1,11 @@
-namespace Assets.Animations {
+namespace Assets.BattleForBetelgeuse.Animations {
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
-    using Assets.Elements.GUI.Grid.HexTile;
-    using Assets.Flux.TweenInteraction;
+    using Assets.BattleForBetelgeuse.Animations.TweenInteraction;
+    using Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile;
+    using Assets.BattleForBetelgeuse.Management;
     using Assets.GameManagement;
 
     using UnityEngine;

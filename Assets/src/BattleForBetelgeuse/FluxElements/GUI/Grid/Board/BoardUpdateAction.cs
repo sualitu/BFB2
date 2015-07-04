@@ -1,4 +1,4 @@
-namespace Assets.Elements.GUI.Grid.Board {
+namespace Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.Board {
     using Assets.Flux.Actions;
 
     public class BoardUpdateAction : ThrottledAction {

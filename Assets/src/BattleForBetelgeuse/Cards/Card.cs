@@ -1,4 +1,4 @@
-namespace Assets.Cards {
+namespace Assets.BattleForBetelgeuse.Cards {
     using System.Collections.Generic;
 
     public abstract class Card {

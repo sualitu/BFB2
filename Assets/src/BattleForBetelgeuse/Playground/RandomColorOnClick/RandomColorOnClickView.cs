@@ -1,6 +1,6 @@
-namespace Assets.Elements.Playground.RandomColorOnClick {
-    using Assets.Flux.Interactable.Clickable;
-    using Assets.GameManagement;
+namespace Assets.BattleForBetelgeuse.Playground.RandomColorOnClick {
+    using Assets.BattleForBetelgeuse.Interactable.Clickable;
+    using Assets.BattleForBetelgeuse.Management;
 
     using UnityEngine;
 

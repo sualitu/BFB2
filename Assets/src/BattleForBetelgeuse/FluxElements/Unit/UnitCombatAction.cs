@@ -1,5 +1,5 @@
-namespace Assets.Elements.GameElements.Unit {
-    using Assets.Elements.GUI.Grid.HexTile;
+namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
+    using Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile;
     using Assets.Flux.Actions;
 
     public class UnitCombatAction : ThrottledAction {

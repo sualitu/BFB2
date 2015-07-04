@@ -1,9 +1,11 @@
 using UnityEngine;
 
-public class DestroyOnFadeCompletion : MonoBehaviour {
+namespace Assets.BattleForBetelgeuse.Animations.MeshExplosions {
+    public class DestroyOnFadeCompletion : MonoBehaviour {
 
-	void FadeCompleted() {
-		Object.Destroy(gameObject);
-	}
+        void FadeCompleted() {
+            Object.Destroy(gameObject);
+        }
 
+    }
 }

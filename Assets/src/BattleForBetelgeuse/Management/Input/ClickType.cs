@@ -1,4 +1,4 @@
-namespace Assets.GameManagement {
+namespace Assets.BattleForBetelgeuse.Management.Input {
     public enum ClickType {
         LeftClick,
 

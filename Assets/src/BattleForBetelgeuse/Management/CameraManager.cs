@@ -1,4 +1,4 @@
-namespace Assets.GameManagement {
+namespace Assets.BattleForBetelgeuse.Management {
     using UnityEngine;
 
     public class CameraManager : MonoBehaviour {
@@ -11,7 +11,7 @@ namespace Assets.GameManagement {
         private void Update() {
             var translation = Vector3.zero;
 
-            var zoomDelta = Input.GetAxis("Mouse ScrollWheel") * Settings.Camera.ZoomSpeed * Time.deltaTime;
+            var zoomDelta = UnityEngine.Input.GetAxis("Mouse ScrollWheel") * Settings.Camera.ZoomSpeed * Time.deltaTime;
             if (zoomDelta != 0) {
                 translation -= Vector3.up * Settings.Camera.ZoomSpeed * zoomDelta;
             }
@@ -23,30 +23,30 @@ namespace Assets.GameManagement {
             }
 
             translation +=
-                (new Vector3(Input.GetAxis("Horizontal") * Settings.Camera.KeyboardScrollSpeed,
+                (new Vector3(UnityEngine.Input.GetAxis("Horizontal") * Settings.Camera.KeyboardScrollSpeed,
                              0,
-                             Input.GetAxis("Vertical") * Settings.Camera.KeyboardScrollSpeed));
+                             UnityEngine.Input.GetAxis("Vertical") * Settings.Camera.KeyboardScrollSpeed));
 
-            if (Input.GetMouseButton(2)) {
+            if (UnityEngine.Input.GetMouseButton(2)) {
                 // Hold button and drag camera around
-                translation -= new Vector3(Input.GetAxis("Mouse X") * Settings.Camera.DragSpeed * Time.deltaTime,
+                translation -= new Vector3(UnityEngine.Input.GetAxis("Mouse X") * Settings.Camera.DragSpeed * Time.deltaTime,
                                            0,
-                                           Input.GetAxis("Mouse Y") * Settings.Camera.DragSpeed * Time.deltaTime);
+                                           UnityEngine.Input.GetAxis("Mouse Y") * Settings.Camera.DragSpeed * Time.deltaTime);
             } else {
                 // Move camera if mouse pointer reaches screen borders
-                if (Input.mousePosition.x < Settings.Camera.ScrollArea) {
+                if (UnityEngine.Input.mousePosition.x < Settings.Camera.ScrollArea) {
                     translation += Vector3.right * -Settings.Camera.ScrollSpeed * Time.deltaTime;
                 }
 
-                if (Input.mousePosition.x >= Screen.width - Settings.Camera.ScrollArea) {
+                if (UnityEngine.Input.mousePosition.x >= Screen.width - Settings.Camera.ScrollArea) {
                     translation += Vector3.right * Settings.Camera.ScrollSpeed * Time.deltaTime;
                 }
 
-                if (Input.mousePosition.y < Settings.Camera.ScrollArea) {
+                if (UnityEngine.Input.mousePosition.y < Settings.Camera.ScrollArea) {
                     translation += Vector3.forward * -Settings.Camera.ScrollSpeed * Time.deltaTime;
                 }
 
-                if (Input.mousePosition.y > Screen.height - Settings.Camera.ScrollArea) {
+                if (UnityEngine.Input.mousePosition.y > Screen.height - Settings.Camera.ScrollArea) {
                     translation += Vector3.forward * Settings.Camera.ScrollSpeed * Time.deltaTime;
                 }
             }

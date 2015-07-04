@@ -1,4 +1,4 @@
-namespace Assets.Flux.Interactable.Clickable {
+namespace Assets.BattleForBetelgeuse.Interactable.Clickable {
     using Assets.Flux.Views;
 
     public abstract class ClickableView : BehaviourUpdatingView {

@@ -1,6 +1,6 @@
 using Rnd = System.Random;
 
-namespace Assets.Elements.Playground.RandomColorOnClick {
+namespace Assets.BattleForBetelgeuse.Playground.RandomColorOnClick {
     using Assets.Flux.Actions;
     using Assets.Flux.Stores;
 

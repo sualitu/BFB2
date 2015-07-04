@@ -1,5 +1,5 @@
-namespace Assets.Elements.GameElements.Unit {
-    using Assets.Cards.UnitCards;
+namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
+    using Assets.BattleForBetelgeuse.Cards.UnitCards;
 
     public class Unit : Fighter {
         public int Movement { get; set; }

@@ -1,9 +1,9 @@
-namespace Assets.Elements.GameElements.Combat {
+namespace Assets.BattleForBetelgeuse.FluxElements.Combat {
     using System;
     using System.Collections;
     using System.Collections.Generic;
 
-    using Assets.Elements.GameElements.Combat.Events;
+    using Assets.BattleForBetelgeuse.FluxElements.Combat.Events;
 
     public class CombatLog : IEnumerator<CombatEvent> {
         private readonly CombatEvent[] _log;

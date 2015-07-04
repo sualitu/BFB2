@@ -1,6 +1,6 @@
-namespace Assets.Elements.GameElements.Cards {
-    using Assets.Cards;
-    using Assets.Elements.GUI.Grid.HexTile;
+namespace Assets.BattleForBetelgeuse.FluxElements.Cards {
+    using Assets.BattleForBetelgeuse.Cards;
+    using Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile;
     using Assets.Flux.Actions;
 
     public abstract class CardPlayedAction<T> : Dispatchable

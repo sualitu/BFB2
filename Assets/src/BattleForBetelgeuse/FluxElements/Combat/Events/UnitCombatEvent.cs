@@ -1,6 +1,6 @@
-namespace Assets.Elements.GameElements.Combat.Events {
-    using Assets.Elements.GameElements.Unit;
-    using Assets.Elements.GUI.Grid.HexTile;
+namespace Assets.BattleForBetelgeuse.FluxElements.Combat.Events {
+    using Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile;
+    using Assets.BattleForBetelgeuse.FluxElements.Unit;
 
     public class UnitCombatEvent : CombatEvent {
         public UnitCombatEvent(long time)

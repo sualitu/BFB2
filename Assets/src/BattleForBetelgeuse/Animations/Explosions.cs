@@ -1,4 +1,6 @@
-namespace Assets.Animations {
+namespace Assets.BattleForBetelgeuse.Animations {
+    using Assets.BattleForBetelgeuse.Animations.MeshExplosions;
+
     using UnityEngine;
 
     public class Explosions {

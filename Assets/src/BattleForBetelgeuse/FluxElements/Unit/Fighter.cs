@@ -1,4 +1,4 @@
-namespace Assets.Elements.GameElements.Unit {
+namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
     public abstract class Fighter {
         public delegate int DealDamage();
 

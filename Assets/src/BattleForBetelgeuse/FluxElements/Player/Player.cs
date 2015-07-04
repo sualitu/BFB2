@@ -1,3 +1,3 @@
-namespace Assets.GameManagement {
+namespace Assets.BattleForBetelgeuse.FluxElements.Player {
     public class Player {}
 }

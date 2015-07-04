@@ -1,14 +1,15 @@
-namespace Assets.Elements.GameElements.Unit {
+namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
     using System.Collections.Generic;
     using System.Linq;
 
-    using Assets.Cards.UnitCards;
-    using Assets.Elements.GameElements.Cards;
-    using Assets.Elements.GUI.Grid.Board;
-    using Assets.Elements.GUI.Grid.HexTile;
+    using Assets.BattleForBetelgeuse.Cards.UnitCards;
+    using Assets.BattleForBetelgeuse.FluxElements.Cards;
+    using Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.Board;
+    using Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile;
+    using Assets.BattleForBetelgeuse.FluxElements.Player;
+    using Assets.BattleForBetelgeuse.Management;
     using Assets.Flux.Actions;
     using Assets.Flux.Stores;
-    using Assets.GameManagement;
     using Assets.Utilities;
 
     public class UnitStore : PublishingStore<List<UnitChange>> {

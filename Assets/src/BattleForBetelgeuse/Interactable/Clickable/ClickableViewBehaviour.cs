@@ -1,5 +1,5 @@
-namespace Assets.Flux.Interactable.Clickable {
-    using Assets.Flux.Interactable.MouseInteraction;
+namespace Assets.BattleForBetelgeuse.Interactable.Clickable {
+    using Assets.BattleForBetelgeuse.Interactable.MouseInteraction;
     using Assets.Flux.Views;
 
     public abstract class ClickableViewBehaviour<T> : ViewBehaviour<T>, IClickable

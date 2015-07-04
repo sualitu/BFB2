@@ -1,7 +1,7 @@
-﻿namespace Assets.Animations.Environment.Bases {
+﻿namespace Assets.BattleForBetelgeuse.Animations.Environment.Bases {
     using System.Collections.Generic;
 
-    using Assets.Elements.GameElements.Unit;
+    using Assets.BattleForBetelgeuse.FluxElements.Unit;
     using Assets.Flux.Views;
 
     public class BaseView : BehaviourUpdatingView {

@@ -1,8 +1,8 @@
-namespace Assets.GameManagement {
+namespace Assets.BattleForBetelgeuse.Management {
     using System.IO;
 
-    using Assets.Elements.GameElements.Unit;
-    using Assets.Elements.GUI.Grid.HexTile;
+    using Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile;
+    using Assets.BattleForBetelgeuse.FluxElements.Unit;
 
     using UnityEngine;
 

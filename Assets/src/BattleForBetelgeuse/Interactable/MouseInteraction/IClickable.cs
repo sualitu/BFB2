@@ -1,4 +1,4 @@
-namespace Assets.Flux.Interactable.MouseInteraction {
+namespace Assets.BattleForBetelgeuse.Interactable.MouseInteraction {
     public interface IClickable {
         void LeftClicked();
 

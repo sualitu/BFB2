@@ -1,4 +1,5 @@
 namespace Assets.Flux.Views {
+    using Assets.BattleForBetelgeuse.Management;
     using Assets.GameManagement;
 
     public class BehaviourUpdatingView : IView {
