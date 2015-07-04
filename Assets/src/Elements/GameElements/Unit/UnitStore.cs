@@ -2,6 +2,8 @@ namespace BattleForBetelgeuse.GameElements.Units {
     using System.Collections.Generic;
     using System.Linq;
 
+    using Assets.src.GameManagement;
+
     using BattleForBetelgeuse.Actions;
     using BattleForBetelgeuse.Cards.UnitCards;
     using BattleForBetelgeuse.GameElements.Cards;
@@ -98,6 +100,8 @@ namespace BattleForBetelgeuse.GameElements.Units {
         }
 
         private void UnitPlayed(HexCoordinate coordinate, UnitCard card) {
+            changes.Add(new UnitChange() { Owner = new Player()});
+            Publish();
             UnitHandler.unitsToCreate.Add(new Tuple<HexCoordinate, string>(coordinate, card.PrefabPath));
         }
 

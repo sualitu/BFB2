@@ -1,12 +1,13 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿namespace BattleForBetelgeuse {
+    using UnityEngine;
 
-namespace BattleForBetelgeuse {
+    public class Prefabs : MonoBehaviour {
+        public GameObject BasePrefab;
 
-  public class Prefabs : MonoBehaviour {
-    public GameObject HexPrefab;
+        public GameObject HexPrefab;
 
-    public Transform PlasmaMuzzle;
-    public Transform PlasmaRay;
-  }
+        public Transform PlasmaMuzzle;
+
+        public Transform PlasmaRay;
+    }
 }

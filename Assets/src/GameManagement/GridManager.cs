@@ -9,6 +9,8 @@ namespace BattleForBetelgeuse {
     public class GridManager {
         private static GridManager instance;
 
+        private readonly GameObject basePrefab;
+
         private readonly GameObject hexPrefab;
 
         private float hexHeight;
@@ -19,6 +21,7 @@ namespace BattleForBetelgeuse {
 
         private GridManager() {
             hexPrefab = BehaviourUpdater.Prefabs.HexPrefab;
+            basePrefab = BehaviourUpdater.Prefabs.BasePrefab;
             CalculateDiameter();
             BuildMap();
             BuildGrid();
@@ -36,11 +39,21 @@ namespace BattleForBetelgeuse {
         private void BuildGrid() {
             for (var i = 0; i < map.Length; i++) {
                 for (var j = 0; j < map[i].Length; j++) {
-                    if (map[i][j] == TileType.Normal) {
-                        InstantiateHexAt(j, i);
+                    switch (map[i][j]) {
+                        case TileType.Base:
+                            InstantiateBaseAt(j, i);
+                            break;
+                        case TileType.Normal:
+                            InstantiateHexAt(j, i);
+                            break;
                     }
                 }
             }
+        }
+
+        private void InstantiateBaseAt(int x, int y) {
+            var createdBase =
+                (GameObject)Object.Instantiate(basePrefab, CalculateLocationFromXY(x, y), Quaternion.identity);
         }
 
         private void BuildMap() {
@@ -60,10 +73,16 @@ namespace BattleForBetelgeuse {
                     map[i] = new TileType[width];
                     for (var j = 0; j < width; j++) {
                         var x = int.Parse(data[k].ToString());
-                        if (x != 14) {
-                            map[i][j] = TileType.Normal;
-                        } else {
-                            map[i][j] = TileType.None;
+                        switch (x) {
+                            case 14:
+                                map[i][j] = TileType.None;
+                                break;
+                            case 7:
+                                map[i][j] = TileType.Base;
+                                break;
+                            default:
+                                map[i][j] = TileType.Normal;
+                                break;
                         }
                         k++;
                     }
@@ -112,9 +131,9 @@ namespace BattleForBetelgeuse {
     internal enum TileType {
         Normal,
 
-        None,
+        None, // 14
 
-        Base,
+        Base, // 7
 
         Flag,
 

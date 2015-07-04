@@ -10,10 +10,10 @@ namespace BattleForBetelgeuse.GameElements.Units {
         private bool hasMoved;
 
         public UnitView(HexCoordinate coordinate) {
-            this.Alive = true;
-            this.Coordinate = coordinate;
-            UnitStore.Instance.Subscribe(this.Move);
-            CombatStore.Instance.Subscribe(this.Combat);
+            Alive = true;
+            Coordinate = coordinate;
+            UnitStore.Instance.Subscribe(Move);
+            CombatStore.Instance.Subscribe(Combat);
         }
 
         internal HexCoordinate Coordinate { get; set; }
@@ -24,15 +24,15 @@ namespace BattleForBetelgeuse.GameElements.Units {
 
         internal bool HasMoved {
             get {
-                var old = this.hasMoved;
-                this.hasMoved = false;
+                var old = hasMoved;
+                hasMoved = false;
                 return old;
             }
         }
 
         private void EngageCombat(HexCoordinate opponentPosition, Fighter unit) {
-            this.Alive = unit.CurrentHealth() > 0;
-            this.CombatTarget = opponentPosition;
+            Alive = unit.CurrentHealth() > 0;
+            CombatTarget = opponentPosition;
         }
 
         public void Combat(CombatLog log) {
@@ -41,31 +41,31 @@ namespace BattleForBetelgeuse.GameElements.Units {
                 if (current is UnitCombatEvent) {
                     var unitCombatEvent = current as UnitCombatEvent;
 
-                    if (unitCombatEvent.AttackerLocation.Equals(this.Coordinate)) {
-                        this.EngageCombat(unitCombatEvent.DefenderLocation, unitCombatEvent.Attacker);
-                    } else if (unitCombatEvent.DefenderLocation.Equals(this.Coordinate)) {
-                        this.EngageCombat(unitCombatEvent.AttackerLocation, unitCombatEvent.Defender);
+                    if (unitCombatEvent.AttackerLocation.Equals(Coordinate)) {
+                        EngageCombat(unitCombatEvent.DefenderLocation, unitCombatEvent.Attacker);
+                    } else if (unitCombatEvent.DefenderLocation.Equals(Coordinate)) {
+                        EngageCombat(unitCombatEvent.AttackerLocation, unitCombatEvent.Defender);
                     }
                 }
             }
-            this.UpdateBehaviour();
+            UpdateBehaviour();
         }
 
         public void Move(List<UnitChange> changes) {
             foreach (var change in changes) {
-                if (change.From.Equals(this.Coordinate)) {
+                if (change.From.Equals(Coordinate)) {
                     if (change.To != null) {
-                        this.Coordinate = change.To;
-                        this.Path = change.Path;
-                        this.hasMoved = true;
+                        Coordinate = change.To;
+                        Path = change.Path;
+                        hasMoved = true;
                     }
                     if (change.Attack != null) {
-                        this.AttackTarget = change.Attack;
+                        AttackTarget = change.Attack;
                     } else {
-                        this.AttackTarget = null;
+                        AttackTarget = null;
                     }
                 }
-                this.UpdateBehaviour();
+                UpdateBehaviour();
             }
         }
     }
