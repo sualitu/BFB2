@@ -4,10 +4,20 @@ namespace Assets.BattleForBetelgeuse.Cards {
     public abstract class Card {
         public static List<Card> AllCards = new List<Card>();
 
+        public abstract int Cost { get; }
+
+        public abstract string Name { get;  }
+
+        public abstract CardType Type { get; }
+
         public Card() {
             AllCards.Add(this);
         }
 
-        public virtual int ManaCost { get; private set; }
+        public virtual CardFaction Faction {
+            get {
+                return CardFaction.Neutral;
+            }
+        }
     }
 }

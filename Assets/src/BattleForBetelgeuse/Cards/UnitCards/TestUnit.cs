@@ -1,8 +1,22 @@
 namespace Assets.BattleForBetelgeuse.Cards.UnitCards {
     public class TestUnit : UnitCard {
-        public override int ManaCost {
+        public override CardFaction Faction
+        {
+            get
+            {
+                return CardFaction.Neutral;
+            }
+        }
+
+        public override int Cost {
             get {
-                return 7;
+                return 14;
+            }
+        }
+
+        public override string Name {
+            get {
+                return "Test Unit";
             }
         }
 

@@ -100,7 +100,7 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
         private void UnitPlayed(HexCoordinate coordinate, UnitCard card) {
             changes.Add(new UnitChange { Owner = new Player() });
             Publish();
-            UnitManager.unitsToCreate.Add(new Tuple<HexCoordinate, string>(coordinate, card.PrefabPath));
+            UnitManager.UnitsToCreate.Add(new Tuple<HexCoordinate, string>(coordinate, card.PrefabPath));
         }
 
         public void HandleAction(Dispatchable action) {

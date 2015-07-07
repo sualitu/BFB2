@@ -1,14 +1,27 @@
 ﻿namespace Assets.BattleForBetelgeuse.Cards.UnitCards {
     public class BeamTestUnit : UnitCard {
-        public override int ManaCost {
+        public override CardFaction Faction
+        {
             get {
-                return 7;
+                return CardFaction.Blue;
+            }
+        }
+
+        public override int Cost {
+            get {
+                return 20;
+            }
+        }
+
+        public override string Name {
+            get {
+                return "Super Moo Poo Unit 2000 Horse";
             }
         }
 
         public override int Health {
             get {
-                return 8;
+                return 1;
             }
         }
 
@@ -20,7 +33,7 @@
 
         public override int Movement {
             get {
-                return 9;
+                return 20;
             }
         }
 

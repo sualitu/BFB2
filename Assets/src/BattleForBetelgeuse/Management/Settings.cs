@@ -21,7 +21,7 @@ namespace Assets.BattleForBetelgeuse.Management {
 
             public const int DragSpeed = 100;
 
-            public static readonly Vector3 LevelAreaMax = new Vector3(23, 10, 12);
+            public static readonly Vector3 LevelAreaMax = new Vector3(12, 10, 9);
 
             public static readonly Vector3 LevelAreaMin = new Vector3(0, 1, -3);
 

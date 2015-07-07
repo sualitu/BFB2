@@ -5,7 +5,7 @@
         // Use this for initialization
         public static PrefabManager PrefabManager { get; private set; }
 
-        private void Awake() {
+        private void Start() {
             SU_SpaceSceneSwitcher.SwitchToRandom();
             PrefabManager = GetComponent<PrefabManager>();
             GridManager.Init();
