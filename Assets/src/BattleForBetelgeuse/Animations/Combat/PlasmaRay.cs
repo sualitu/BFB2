@@ -1,6 +1,5 @@
 ﻿namespace Assets.BattleForBetelgeuse.Animations.Combat {
     using Assets.BattleForBetelgeuse.Management;
-    using Assets.GameManagement;
 
     internal class PlasmaRay : CombatAnimation {
         internal override int FramesBetweenShots {

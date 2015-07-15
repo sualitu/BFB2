@@ -16,7 +16,7 @@ namespace Assets.BattleForBetelgeuse.Cards.UnitCards {
 
         public override string Name {
             get {
-                return "Test Unit";
+                return "Test Card Unit";
             }
         }
 

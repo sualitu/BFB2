@@ -1,16 +1,18 @@
 namespace Assets.Flux.Views {
+    using System;
+
     using Assets.BattleForBetelgeuse.Management;
-    using Assets.GameManagement;
 
     public class BehaviourUpdatingView : IView {
-        internal int _id;
+        internal Guid Id;
 
-        public void SetId(int id) {
-            _id = id;
+        public void SetId(Guid id)
+        {
+            Id = id;
         }
 
         internal void UpdateBehaviour() {
-            BehaviourManager.Updated.Add(_id);
+            BehaviourManager.Updated.Add(Id);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.Board {
         private readonly BoardStatus status;
 
         private BoardStore() {
-            this.status = new BoardStatus();
+            status = new BoardStatus();
         }
 
         public static BoardStore Instance {
@@ -25,43 +25,42 @@ namespace Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.Board {
         }
 
         internal override void SendMessage(Message msg) {
-            msg(this.status);
+            msg(status);
         }
 
         private void UpdateStatus(HexCoordinate coordinate) {
-            if (coordinate != null && coordinate.Equals(this.status.CurrentSelection)) {
+            if (coordinate != null && coordinate.Equals(status.CurrentSelection)) {
                 return;
             }
-            this.status.PreviousSelection = this.status.CurrentSelection;
-            this.status.CurrentSelection = coordinate;
-            if (this.status.PreviousSelection != null && this.status.CurrentSelection != null) {
+            status.PreviousSelection = status.CurrentSelection;
+            status.CurrentSelection = coordinate;
+            if (status.PreviousSelection != null && status.CurrentSelection != null) {
                 try {
-                    this.status.Path = AStar<HexCoordinate>.FindPath(this.status.PreviousSelection,
-                                                                     this.status.CurrentSelection);
+                    status.Path = AStar<HexCoordinate>.FindPath(status.PreviousSelection, status.CurrentSelection);
                 } catch {
-                    this.status.Path = new List<HexCoordinate>();
+                    status.Path = new List<HexCoordinate>();
                 }
             }
         }
 
-        public override void Update(Dispatchable action) {
+        public override void UpdateStore(Dispatchable action) {
             if (action is HexTileClickedAction) {
                 var hexTileClickedAction = (HexTileClickedAction)action;
-                this.UpdateStatus(hexTileClickedAction.Coordinate);
-                this.Publish();
+                UpdateStatus(hexTileClickedAction.Coordinate);
+                Publish();
             } else if (action is RightClickAction) {
-                this.Deselect();
+                Deselect();
             }
         }
 
         internal override void Publish() {
-            new BoardUpdateAction(this.status.Copy());
+            new BoardUpdateAction(status.Copy());
             base.Publish();
         }
 
         public void Deselect() {
-            this.UpdateStatus(null);
-            this.Publish();
+            UpdateStatus(null);
+            Publish();
         }
     }
 }

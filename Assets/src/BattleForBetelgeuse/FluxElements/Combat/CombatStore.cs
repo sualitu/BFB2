@@ -47,7 +47,7 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Combat {
             events.Add(logEvent);
         }
 
-        public override void Update(Dispatchable action) {
+        public override void UpdateStore(Dispatchable action) {
             if (action is UnitCombatAction) {
                 var unitCombatAction = (UnitCombatAction)action;
                 HandleUnitCombatAction(unitCombatAction);

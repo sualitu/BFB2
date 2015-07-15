@@ -98,7 +98,7 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
         }
 
         private void UnitPlayed(HexCoordinate coordinate, UnitCard card) {
-            changes.Add(new UnitChange { Owner = new Player() });
+            changes.Add(new UnitChange { Owner = new LocalPlayer() });
             Publish();
             UnitManager.UnitsToCreate.Add(new Tuple<HexCoordinate, string>(coordinate, card.PrefabPath));
         }
@@ -114,7 +114,7 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
             }
         }
 
-        public override void Update(Dispatchable action) {
+        public override void UpdateStore(Dispatchable action) {
             HandleAction(action);
         }
 

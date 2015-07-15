@@ -14,7 +14,7 @@ namespace Assets.BattleForBetelgeuse.Playground.RandomColorOnClick {
 
         public void ChangeColor(Color color) {
             Color = color;
-            BehaviourManager.Updated.Add(_id);
+            BehaviourManager.Updated.Add(Id);
         }
 
         public override void LeftClicked() {

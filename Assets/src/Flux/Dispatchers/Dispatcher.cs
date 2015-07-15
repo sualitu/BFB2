@@ -4,21 +4,21 @@
     using System.Linq;
     using System.Threading;
 
+    using Assets.BattleForBetelgeuse.FluxElements.Cards;
     using Assets.Flux.Actions;
     using Assets.Flux.Actions.DispatcherActions;
     using Assets.Flux.Stores;
-    using Assets.GameManagement;
 
     public class Dispatcher {
         private static Dispatcher instance;
 
-        private readonly List<Dispatchable> actions;
+        public readonly List<Dispatchable> actions;
 
         private readonly List<IStore> stores;
 
         private List<Dispatchable> delayedActions;
 
-        private Thread dispatcherThread;
+        public Thread dispatcherThread;
 
         private bool paused;
 
@@ -41,7 +41,7 @@
             stores.Add(store);
         }
 
-        private void startDispatching() {
+        private void StartDispatching() {
             dispatcherThread = new Thread(Dispatch);
             dispatcherThread.Start();
         }
@@ -61,7 +61,7 @@
                 HandleDispatchingAction((DispatchingAction)action);
             }
             if ((dispatcherThread == null || !dispatcherThread.IsAlive)) {
-                startDispatching();
+                StartDispatching();
             }
         }
 
@@ -73,7 +73,7 @@
                 delayedActions.ForEach(action => actions.Add(action));
                 delayedActions = new List<Dispatchable>();
                 UnpauseDispatching();
-                startDispatching();
+                StartDispatching();
             }
         }
 
@@ -99,7 +99,7 @@
                     ThrottleActions(action);
 
                     if (!paused || (action is UnpausableAction)) {
-                        stores.ForEach(store => store.Update(action));
+                        stores.ForEach(store => store.UpdateStore(action));
                     } else {
                         delayedActions.Add(action);
                     }

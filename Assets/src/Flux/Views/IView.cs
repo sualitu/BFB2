@@ -1,5 +1,7 @@
 namespace Assets.Flux.Views {
+    using System;
+
     public interface IView {
-        void SetId(int id);
+        void SetId(Guid id);
     }
 }

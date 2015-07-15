@@ -15,7 +15,7 @@
 
         public override string Name {
             get {
-                return "Super Moo Poo Unit 2000 Horse";
+                return "Test Card with Very Long Name";
             }
         }
 

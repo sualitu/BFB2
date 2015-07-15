@@ -4,7 +4,6 @@
     using System.Linq;
 
     using Assets.BattleForBetelgeuse.Management;
-    using Assets.GameManagement;
 
     using UnityEngine;
 

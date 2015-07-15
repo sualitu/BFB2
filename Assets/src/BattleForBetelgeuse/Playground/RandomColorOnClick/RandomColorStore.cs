@@ -31,7 +31,7 @@ namespace Assets.BattleForBetelgeuse.Playground.RandomColorOnClick {
             msg(color);
         }
 
-        public override void Update(Dispatchable action) {
+        public override void UpdateStore(Dispatchable action) {
             if (action is RandomColorOnClickAction) {
                 color = new Color((float)rnd.NextDouble(), (float)rnd.NextDouble(), (float)rnd.NextDouble());
                 Publish();

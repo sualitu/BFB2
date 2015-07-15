@@ -1,7 +1,6 @@
 ﻿namespace Assets.BattleForBetelgeuse.Animations.Environment.Bases {
     using Assets.BattleForBetelgeuse.Management;
     using Assets.Flux.Views;
-    using Assets.GameManagement;
 
     using UnityEngine;
 

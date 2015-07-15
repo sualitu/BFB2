@@ -1,6 +1,8 @@
 namespace Assets.Flux.Views {
+    using System;
+
     public interface IUpdatableView {
-        int UniqueId();
+        Guid UniqueId();
 
         void PushUpdate();
     }

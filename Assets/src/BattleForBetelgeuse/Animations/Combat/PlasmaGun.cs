@@ -1,6 +1,5 @@
 ﻿namespace Assets.BattleForBetelgeuse.Animations.Combat {
     using Assets.BattleForBetelgeuse.Management;
-    using Assets.GameManagement;
 
     using UnityEngine;
 

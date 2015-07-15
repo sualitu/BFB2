@@ -52,7 +52,7 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
                 gameObject.transform.position = GridManager.CalculateLocationFromHexCoordinate(coordinate);
             } else {
                 StartThrusters();
-                Movement.MoveAlongPath(Companion.Path, this);
+                Movement.Unit.MoveAlongPath(Companion.Path, this);
             }
             CheckCombat();
         }
@@ -91,7 +91,7 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
 
         private void PerformCombat() {
             if (Settings.Animations.AnimateCombat) {
-                Movement.FaceHex(Companion.CombatTarget, this, "BeginCombat");
+                Movement.Unit.FaceHex(Companion.CombatTarget, this, "BeginCombat");
             } else {
                 CallBack();
             }

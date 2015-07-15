@@ -26,10 +26,9 @@ public class TweenScale : UITweener
 	[System.Obsolete("Use 'value' instead")]
 	public Vector3 scale { get { return this.value; } set { this.value = value; } }
 
-	/// <summary>
-	/// Tween the value.
-	/// </summary>
-
+    /// <summary>
+    /// Tween the value.
+    /// </summary>
 	protected override void OnUpdate (float factor, bool isFinished)
 	{
 		value = from * (1f - factor) + to * factor;

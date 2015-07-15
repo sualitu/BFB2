@@ -38,6 +38,30 @@ namespace Assets.BattleForBetelgeuse.Management {
             public static bool AnimateDeath = true;
 
             public static bool AnimateCombat = true;
+
+            public class Cards {
+                public const float FadeInTime = 1.2f;
+
+                public const float CardMovementSlow = .75f;
+
+                public const float CardMovementDuration = .5f;
+
+                public const float CardSize = .7f;
+
+                public const float CardMovementFast = .2f;
+
+                public static Vector3 CardSpawnPosition = new Vector3((Screen.width / 2) *.6f, 0f, 0f);
+
+                public static Vector3 CardPlayedPosition = new Vector3(-(Screen.width / 2) * .6f, 0f, 0f);
+
+                public static Vector3 CardDropZoneCutOff = new Vector3(0f, Screen.height /4, 0f);
+            }
+        }
+
+        public class GameSettings {
+            public static int MaxMana = 20;
+
+            public static int MaxHandSize = 7;
         }
     }
 }

@@ -1,4 +1,5 @@
 namespace Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile {
+    using Assets.BattleForBetelgeuse.FluxElements.Cards;
     using Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.Board;
     using Assets.BattleForBetelgeuse.Interactable.Clickable;
     using Assets.BattleForBetelgeuse.Management;
@@ -14,7 +15,9 @@ namespace Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile {
         internal HexCoordinate Coordinate { get; set; }
 
         public override void LeftClicked() {
-            new HexTileClickedAction(Coordinate);
+            //new HexTileClickedAction(Coordinate);
+
+            new CardDrawnAction();
         }
 
         public void CheckSelected(BoardStatus status) {

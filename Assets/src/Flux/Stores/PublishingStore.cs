@@ -7,6 +7,6 @@ namespace Assets.Flux.Stores {
             Dispatcher.Instance.Register(this);
         }
 
-        public abstract void Update(Dispatchable action);
+        public abstract void UpdateStore(Dispatchable action);
     }
 }

@@ -9,7 +9,7 @@ namespace Assets.Flux.Stores {
         public void Subscribe(Message msg) {
             messages.Add(msg);
         }
-
+        
         internal virtual void Publish() {
             messages.ForEach(SendMessage);
         }

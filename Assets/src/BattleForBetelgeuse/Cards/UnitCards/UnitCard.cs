@@ -1,5 +1,5 @@
 ﻿namespace Assets.BattleForBetelgeuse.Cards.UnitCards {
-    using Assets.GameManagement;
+    using Assets.Flux;
 
     public abstract class UnitCard : CombatCard
     {

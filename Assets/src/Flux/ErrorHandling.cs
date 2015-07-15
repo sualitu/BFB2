@@ -1,4 +1,4 @@
-namespace Assets.GameManagement {
+namespace Assets.Flux {
     using System;
 
     using UnityEngine;
@@ -16,6 +16,7 @@ namespace Assets.GameManagement {
 
         public static void ExceptionInDispatcherThread(Exception e) {
             Debug.Log(String.Format("An exception was thrown in the dispatcher thread: " + e.Message));
+            Debug.Log(e.StackTrace);
             throw e;
         }
     }

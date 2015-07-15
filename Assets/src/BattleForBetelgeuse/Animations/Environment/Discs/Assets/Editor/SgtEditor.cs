@@ -34,7 +34,7 @@ namespace Assets.BattleForBetelgeuse.Animations.Environment.Discs {
             }
             if (EditorGUI.EndChangeCheck() == true)
             {
-                GUI.changed = true; Repaint();
+                UnityEngine.GUI.changed = true; Repaint();
 			
                 foreach (var t in Targets)
                 {
@@ -50,8 +50,8 @@ namespace Assets.BattleForBetelgeuse.Animations.Environment.Discs {
             Target = (T)target;
 		
             OnScene();
-		
-            if (GUI.changed == true)
+
+            if (UnityEngine.GUI.changed == true)
             {
                 SgtHelper.SetDirty(target);
             }
@@ -94,8 +94,8 @@ namespace Assets.BattleForBetelgeuse.Animations.Environment.Discs {
         protected bool Button(string text)
         {
             var rect = SgtHelper.Reserve();
-		
-            return GUI.Button(rect, text);
+
+            return UnityEngine.GUI.Button(rect, text);
         }
 	
         protected bool HelpButton(string helpText, UnityEditor.MessageType type, string buttonText, float buttonWidth)
@@ -105,8 +105,8 @@ namespace Assets.BattleForBetelgeuse.Animations.Environment.Discs {
             EditorGUILayout.BeginHorizontal();
             {
                 EditorGUILayout.HelpBox(helpText, type);
-			
-                var style = new GUIStyle(GUI.skin.button); style.wordWrap = true;
+
+                var style = new GUIStyle(UnityEngine.GUI.skin.button); style.wordWrap = true;
 			
                 clicked = GUILayout.Button(buttonText, style, GUILayout.ExpandHeight(true), GUILayout.Width(buttonWidth));
             }

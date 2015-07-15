@@ -10,7 +10,11 @@
     using UnityEngine;
 
     public class UnitManager : MonoBehaviour {
-        public static List<Tuple<HexCoordinate, string>> UnitsToCreate = new List<Tuple<HexCoordinate, string>>();
+        public static List<Tuple<HexCoordinate, string>> UnitsToCreate;
+
+        void Awake() {
+            UnitsToCreate = new List<Tuple<HexCoordinate, string>>();
+        }
 
         private void Start() {
             UnitStore.Init();
