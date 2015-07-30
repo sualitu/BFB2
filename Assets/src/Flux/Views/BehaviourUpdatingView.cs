@@ -3,16 +3,17 @@ namespace Assets.Flux.Views {
 
     using Assets.BattleForBetelgeuse.Management;
 
-    public class BehaviourUpdatingView : IView {
-        internal Guid Id;
+    public abstract class BehaviourUpdatingView : IView {
+        internal Guid guid;
 
-        public void SetId(Guid id)
-        {
-            Id = id;
+        public void SetId(Guid guid) {
+            this.guid = guid;
         }
 
+        public abstract void SetupSubscriptions();
+
         internal void UpdateBehaviour() {
-            BehaviourManager.Updated.Add(Id);
+            BehaviourManager.Updated.Add(guid);
         }
     }
 }

@@ -3,7 +3,7 @@
 
     internal class CardCreatingAction : CardAction {
 
-        public CardCreatingAction(int id)
+        public CardCreatingAction(Guid id)
             : base(id) {
         }
     }

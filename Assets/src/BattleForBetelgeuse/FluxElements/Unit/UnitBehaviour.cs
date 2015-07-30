@@ -7,9 +7,10 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
     using Assets.Flux.Actions.DispatcherActions;
     using Assets.Flux.Views;
 
+
     public class UnitBehaviour : ViewBehaviour<UnitView>, ITweenable {
         private CombatAnimation combatAnimation;
-
+        
         public HexCoordinate Coordinate { private get; set; }
 
         public void BeforeTween() {

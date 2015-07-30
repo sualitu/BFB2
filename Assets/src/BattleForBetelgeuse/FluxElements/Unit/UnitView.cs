@@ -5,6 +5,7 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
     using Assets.BattleForBetelgeuse.FluxElements.Combat.Events;
     using Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile;
     using Assets.Flux.Views;
+    using Assets.Utilities;
 
     public class UnitView : BehaviourUpdatingView {
         private bool hasMoved;
@@ -12,8 +13,6 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
         public UnitView(HexCoordinate coordinate) {
             Alive = true;
             Coordinate = coordinate;
-            UnitStore.Instance.Subscribe(Move);
-            CombatStore.Instance.Subscribe(Combat);
         }
 
         internal HexCoordinate Coordinate { get; set; }
@@ -33,6 +32,10 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
         private void EngageCombat(HexCoordinate opponentPosition, Fighter unit) {
             Alive = unit.CurrentHealth() > 0;
             CombatTarget = opponentPosition;
+            if (!Alive) {
+                UnitStore.Instance.Unsubscribe(guid);
+                CombatStore.Instance.Unsubscribe(guid);
+            }
         }
 
         public void Combat(CombatLog log) {
@@ -40,10 +43,11 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
                 var current = log.Current;
                 if (current is UnitCombatEvent) {
                     var unitCombatEvent = current as UnitCombatEvent;
-
                     if (unitCombatEvent.AttackerLocation.Equals(Coordinate)) {
+                        Logger.Log("I'm attacking!");
                         EngageCombat(unitCombatEvent.DefenderLocation, unitCombatEvent.Attacker);
                     } else if (unitCombatEvent.DefenderLocation.Equals(Coordinate)) {
+                        Logger.Log("I'm depending!");
                         EngageCombat(unitCombatEvent.AttackerLocation, unitCombatEvent.Defender);
                     }
                 }
@@ -67,6 +71,11 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
                 }
                 UpdateBehaviour();
             }
+        }
+
+        public override void SetupSubscriptions() {
+            UnitStore.Instance.Subscribe(guid, Move);
+            CombatStore.Instance.Subscribe(guid, Combat);
         }
     }
 }

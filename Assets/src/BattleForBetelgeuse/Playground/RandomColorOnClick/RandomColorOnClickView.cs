@@ -6,7 +6,6 @@ namespace Assets.BattleForBetelgeuse.Playground.RandomColorOnClick {
 
     public class RandomColorOnClickView : ClickableView {
         public RandomColorOnClickView() {
-            RandomColorStore.Instance.Subscribe(ChangeColor);
             Color = Color.black;
         }
 
@@ -14,7 +13,7 @@ namespace Assets.BattleForBetelgeuse.Playground.RandomColorOnClick {
 
         public void ChangeColor(Color color) {
             Color = color;
-            BehaviourManager.Updated.Add(Id);
+            BehaviourManager.Updated.Add(guid);
         }
 
         public override void LeftClicked() {
@@ -23,6 +22,10 @@ namespace Assets.BattleForBetelgeuse.Playground.RandomColorOnClick {
 
         public override void RightClicked() {
             new RandomColorOnClickAction();
+        }
+
+        public override void SetupSubscriptions() {
+            RandomColorStore.Instance.Subscribe(guid, ChangeColor);
         }
     }
 }

@@ -10,6 +10,6 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
         public HexCoordinate Attack { get; set; }
         public List<HexCoordinate> Path { get; set; }
 
-        public Player Owner { get; set; }
+        public bool NewUnitSpawned { get; set; }
     }
 }

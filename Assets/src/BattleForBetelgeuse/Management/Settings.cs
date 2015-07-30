@@ -13,7 +13,7 @@ namespace Assets.BattleForBetelgeuse.Management {
 
             public const int ZoomSpeed = 25;
 
-            public const int PanSpeed = 100;
+            public const int PanSpeed = 75;
 
             public const int PanAngleMin = 20;
 
@@ -21,7 +21,7 @@ namespace Assets.BattleForBetelgeuse.Management {
 
             public const int DragSpeed = 100;
 
-            public static readonly Vector3 LevelAreaMax = new Vector3(12, 10, 9);
+            public static readonly Vector3 LevelAreaMax = new Vector3(12, 6, 9);
 
             public static readonly Vector3 LevelAreaMin = new Vector3(0, 1, -3);
 
@@ -39,6 +39,10 @@ namespace Assets.BattleForBetelgeuse.Management {
 
             public static bool AnimateCombat = true;
 
+            public class Units {
+                public const float FadeInTime = 2f;
+            }
+
             public class Cards {
                 public const float FadeInTime = 1.2f;
 
@@ -54,7 +58,7 @@ namespace Assets.BattleForBetelgeuse.Management {
 
                 public static Vector3 CardPlayedPosition = new Vector3(-(Screen.width / 2) * .6f, 0f, 0f);
 
-                public static Vector3 CardDropZoneCutOff = new Vector3(0f, Screen.height /4, 0f);
+                public static Vector3 CardDropZoneCutOff = new Vector3(0f, 200, 0f);
             }
         }
 

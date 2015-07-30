@@ -3,10 +3,8 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
     using System.Linq;
 
     using Assets.BattleForBetelgeuse.Cards.UnitCards;
-    using Assets.BattleForBetelgeuse.FluxElements.Cards;
     using Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.Board;
     using Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile;
-    using Assets.BattleForBetelgeuse.FluxElements.Player;
     using Assets.BattleForBetelgeuse.Management;
     using Assets.Flux.Actions;
     using Assets.Flux.Stores;
@@ -32,7 +30,7 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
             }
         }
 
-        private void BoardUpdate(BoardStatus status) {
+        public void BoardUpdate(BoardStatus status) {
             if (status.PreviousSelection == null || status.CurrentSelection == null) {
                 return;
             }
@@ -98,14 +96,14 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Unit {
         }
 
         private void UnitPlayed(HexCoordinate coordinate, UnitCard card) {
-            changes.Add(new UnitChange { Owner = new LocalPlayer() });
+            changes.Add(new UnitChange { From = coordinate, NewUnitSpawned = true });
             Publish();
             UnitManager.UnitsToCreate.Add(new Tuple<HexCoordinate, string>(coordinate, card.PrefabPath));
         }
 
         public void HandleAction(Dispatchable action) {
-            if (action is UnitCardPlayedAction) {
-                var unitCardPlayedAction = (UnitCardPlayedAction)action;
+            if (action is UnitSpawnedAction) {
+                var unitCardPlayedAction = (UnitSpawnedAction)action;
                 UnitPlayed(unitCardPlayedAction.Location, unitCardPlayedAction.Card);
                 units.Add(unitCardPlayedAction.Location, (Unit.FromCard(unitCardPlayedAction.Card)));
             } else if (action is BoardUpdateAction) {

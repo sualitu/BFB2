@@ -1,3 +1,6 @@
 namespace Assets.Flux.Actions.DispatcherActions {
-    public class UnpauseDispatchingAction : DispatchingAction {}
+    using Assets.Utilities;
+
+    public class UnpauseDispatchingAction : DispatchingAction {
+    }
 }

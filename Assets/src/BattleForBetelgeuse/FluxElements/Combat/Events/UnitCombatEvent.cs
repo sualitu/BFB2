@@ -10,5 +10,9 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Combat.Events {
         public HexCoordinate AttackerLocation { get; set; }
         public Unit Defender { get; set; }
         public HexCoordinate DefenderLocation { get; set; }
+
+        public override string ToString() {
+            return string.Format("Attacker: {0}, AttackerLocation: {1}, Defender: {2}, DefenderLocation: {3}", Attacker, AttackerLocation, Defender, DefenderLocation);
+        }
     }
 }

@@ -3,7 +3,9 @@
 
     public abstract class UnitCard : CombatCard
     {
-        private readonly string prefabLocation = "Units/";
+        private const string PrefabLocation = "Units/";
+
+        private const string CardPreSpawnLocation = "Animations/UnitHolos/";
 
         public virtual int Movement { get; private set; }
         internal virtual string PrefabName { get; private set; }
@@ -14,9 +16,15 @@
             }
         }
 
+        public override string PreSpawnAnimationPrefab {
+            get {
+                return CardPreSpawnLocation + PrefabName;
+            }
+        }
+
         public string PrefabPath {
             get {
-                return prefabLocation + PrefabName;
+                return PrefabLocation + PrefabName;
             }
             internal set {
                 ErrorHandling.InvalidOpration(this);

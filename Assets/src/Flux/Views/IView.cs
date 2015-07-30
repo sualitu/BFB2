@@ -2,6 +2,8 @@ namespace Assets.Flux.Views {
     using System;
 
     public interface IView {
-        void SetId(Guid id);
+        void SetId(Guid guid);
+
+        void SetupSubscriptions();
     }
 }

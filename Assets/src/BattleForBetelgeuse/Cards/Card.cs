@@ -4,6 +4,8 @@ namespace Assets.BattleForBetelgeuse.Cards {
     public abstract class Card {
         public static List<Card> AllCards = new List<Card>();
 
+        public abstract string PreSpawnAnimationPrefab { get; }
+
         public abstract int Cost { get; }
 
         public abstract string Name { get;  }

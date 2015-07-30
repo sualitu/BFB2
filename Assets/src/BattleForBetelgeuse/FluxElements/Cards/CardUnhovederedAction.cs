@@ -3,7 +3,7 @@
 
     public class CardUnhovederedAction : CardAction
     {
-        public CardUnhovederedAction(int id)
+        public CardUnhovederedAction(Guid id)
             : base(id)
         {
 

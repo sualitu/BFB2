@@ -2,7 +2,7 @@
     using System;
 
     public class CardCreatedAction : CardAction {
-        public CardCreatedAction(int id)
+        public CardCreatedAction(Guid id)
             : base(id) {}
     }
 }

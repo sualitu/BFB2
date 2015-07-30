@@ -3,8 +3,8 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Cards {
 
     using UnityEngine;
 
-    internal class CardPutDownAction : CardAction {
-        public CardPutDownAction(int id, Vector3 position, bool leftClick)
+    public class CardPutDownAction : CardAction {
+        public CardPutDownAction(Guid id, Vector3 position, bool leftClick)
             : base(id) {
             LeftClick = leftClick;
             Position = position;

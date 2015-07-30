@@ -9,20 +9,12 @@
     using UnityEngine;
 
     public class CardView : BehaviourUpdatingView {
-        public static string msg = "";
-
-        public static int j;
-
-        public static int i;
-
-        public readonly int cardId;
-        public string s = "Nothing yet";
+        public readonly Guid cardId;
 
         public CardStatus Status = CardStatus.Unknown;
 
-        public CardView(int cardId) {
+        public CardView(Guid cardId) {
             this.cardId = cardId;
-            CardStore.Instance.Subscribe(CheckUpdate);
             PositionChange = new Tuple<bool, Vector3>(false, Vector3.zero);
             RotationChange = new Tuple<bool, Vector3>(false, Vector3.zero);
             ScaleChange = new Tuple<bool, Vector3>(false, Vector3.zero);
@@ -44,9 +36,9 @@
         public Tuple<bool, Vector3> RotationChange { get; private set; }
         public Tuple<bool, Vector3> PositionChange { get; private set; }
 
-        internal bool Played {
+        internal bool OnBoard {
             get {
-                return Status == CardStatus.Played;
+                return Status == CardStatus.OnBoard;
             }
         }
 
@@ -62,7 +54,7 @@
                 PositionChange = new Tuple<bool, Vector3>(true, transformVectors.First);
                 RotationChange = new Tuple<bool, Vector3>(true, transformVectors.Second);
                 ScaleChange = new Tuple<bool, Vector3>(true, transformVectors.Third);
-            } else if (Played) {
+            } else if (OnBoard) {
                 PositionChange = new Tuple<bool, Vector3>(true, Settings.Animations.Cards.CardPlayedPosition);
                 RotationChange = new Tuple<bool, Vector3>(true, Vector3.zero);
                 ScaleChange = new Tuple<bool, Vector3>(true, Vector3.one);
@@ -71,18 +63,19 @@
         }
 
         private void CheckUpdate(CardUpdate cardUpdate) {
-            if (cardUpdate.Status == CardStatus.Creating) {
-            }
-            j = cardUpdate.Id;
-            i = cardId;
-            if (cardUpdate.Id == cardId)
-            {
+            if (cardUpdate.Id == cardId) {
                 Status = cardUpdate.Status == CardStatus.Unhovered ? CardStatus.InHand : cardUpdate.Status;
+
+                if (cardUpdate.Status == CardStatus.Removed) {
+                    CardStore.Instance.Unsubscribe(guid);
+                }
             }
 
             UpdateLocation();
-            if (cardUpdate.Status == CardStatus.Creating) {
-            }
+        }
+
+        public override void SetupSubscriptions() {
+            CardStore.Instance.Subscribe(guid, CheckUpdate);
         }
     }
 }

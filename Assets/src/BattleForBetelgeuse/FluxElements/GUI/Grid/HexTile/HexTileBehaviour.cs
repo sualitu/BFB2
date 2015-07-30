@@ -6,36 +6,30 @@ namespace Assets.BattleForBetelgeuse.FluxElements.GUI.Grid.HexTile {
     using UnityEngine;
 
     public class HexTileBehaviour : ClickableViewBehaviour<HexTileView>, IMouseOverable {
-        private Color NonTempColor = Settings.ColorSettings.TileBaseColor;
 
         private Renderer rend;
 
         public HexCoordinate Coordinate { get; set; }
 
         public void MouseOver() {
-            ColorTemporarily(Color.red);
+            new MouseOverHexAction(Coordinate);
         }
 
         public void MouseOut() {
-            UpdateColor(NonTempColor);
         }
 
         public void UpdateColor(Color color) {
-            NonTempColor = color;
-            rend.material.SetColor("_Color", color);
-        }
-
-        public void ColorTemporarily(Color color) {
             rend.material.SetColor("_Color", color);
         }
 
         private void Start() {
             BehaviourManager.Behaviours.Add(this);
-            Companion = new HexTileView();
-            Companion.Coordinate = Coordinate;
+            
             rend = GetComponent<Renderer>();
             gameObject.name = "Hex:" + UniqueId();
             gameObject.tag = "HexTile";
+            Companion = new HexTileView();
+            Companion.Coordinate = Coordinate;
         }
 
         public override void PushUpdate() {

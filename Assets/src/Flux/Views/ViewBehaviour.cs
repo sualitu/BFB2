@@ -7,15 +7,16 @@ namespace Assets.Flux.Views {
         where T : IView {
         private T companion;
 
-        private readonly Guid uniqueId = Guid.NewGuid();
+        private Guid uniqueId;
 
         public T Companion {
             get {
                 return companion;
             }
             internal set {
+                value.SetId(uniqueId);
+                value.SetupSubscriptions();
                 companion = value;
-                companion.SetId(uniqueId);
             }
         }
 
@@ -24,5 +25,12 @@ namespace Assets.Flux.Views {
         }
 
         public abstract void PushUpdate();
+
+        public virtual void Awake() {
+            uniqueId = Guid.NewGuid();
+            CustomAwake();
+        }
+
+        protected virtual void CustomAwake() {}
     }
 }

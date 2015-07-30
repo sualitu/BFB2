@@ -9,6 +9,8 @@
     using UnityEngine;
 
     public class HandManager {
+        private readonly Guid guid;
+
         private const int CardRoom = 100;
 
         private const float CardRotationRate = -10f;
@@ -23,15 +25,16 @@
 
         private readonly float YPosition;
 
-        private int? hovered;
+        private Guid? hovered;
 
         private HandManager() {
-            LocalPlayerStore.Instance.Subscribe(UpdateHand);
-            CardStore.Instance.Subscribe(UpdateHovered);
-            YPosition = -Screen.height / 2 + CardRoom * 1.5f;
+            guid = Guid.NewGuid();
+            LocalPlayerStore.Instance.Subscribe(guid, UpdateHand);
+            CardStore.Instance.Subscribe(guid, UpdateHovered);
+            YPosition = -Screen.height / 2 * .6f;
         }
 
-        public List<int> Hand { get; private set; }
+        public List<Guid> Hand { get; private set; }
 
         public static HandManager Instance {
             get {
@@ -58,7 +61,8 @@
             instance = new HandManager();
         }
 
-        public Triple<Vector3, Vector3, Vector3> GetTransformOfCard(int id) {
+        public Triple<Vector3, Vector3, Vector3> GetTransformOfCard(Guid id)
+        {
             return CalculateTransformForCardIndex(Hand.IndexOf(id));
         }
 

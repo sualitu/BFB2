@@ -17,8 +17,8 @@
         private LocalPlayerStore() {
             maxMana = 0;
             Player = new LocalPlayer {
-                Hand = new List<int>(),
-                Deck = new List<Card> { new TestUnit(), new BeamTestUnit(), new TestUnitGreen() }
+                Hand = new List<Guid>(),
+                Deck = new List<Card> { new TestUnit(), new BeamTestUnit(), new TestUnitGreen(), new TestUnit(), new BeamTestUnit(), new TestUnitGreen(), new TestUnit(), new BeamTestUnit(), new TestUnitGreen(), new TestUnit(), new BeamTestUnit(), new TestUnitGreen(), new TestUnit(), new BeamTestUnit(), new TestUnitGreen() }
             };
         }
 
@@ -39,7 +39,10 @@
                 }
                 Publish();
             }
-            else if (action is CardPlayedAction<Card>) { }
+            else if (action is CardPlayedAction) {
+                var cardPlayedAction = action as CardPlayedAction;
+                Player.Hand.Remove(cardPlayedAction.Id);
+            }
         }
 
         internal override void SendMessage(Message msg) {
@@ -50,7 +53,7 @@
             if (Player.DeckCount > 0) {
                 var drawn = Player.Deck.GetAndRemoveRandom();
                 if (Player.HandCount < Settings.GameSettings.MaxHandSize) {
-                    var guid = GetFreshCardId();
+                    var guid = Guid.NewGuid();
                     Player.Hand.Add(guid);
                     CardStore.Instance.CardDrawn(guid, drawn);
                 } else {

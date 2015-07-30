@@ -1,14 +1,13 @@
 namespace Assets.Flux.Actions {
     using System;
     using System.Threading;
-
-    using Assets.Flux.Actions.DispatcherActions;
     using Assets.Flux.Dispatchers;
 
     public abstract class Dispatchable : IComparable<Dispatchable> {
-        internal AutoResetEvent _readyToGo = new AutoResetEvent(false);
+        protected AutoResetEvent _readyToGo = new AutoResetEvent(false);
 
-        public Dispatchable() {
+        protected Dispatchable()
+        {
             Invocation = DateTime.Now.Ticks;
             Dispatcher.Instance.Signup(this);
         }
@@ -17,10 +16,6 @@ namespace Assets.Flux.Actions {
 
         public int CompareTo(Dispatchable other) {
             return Invocation.CompareTo(other.Invocation);
-        }
-
-        public void Delay() {
-            new DelayedAction(this);
         }
     }
 }

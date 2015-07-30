@@ -3,24 +3,29 @@
 
     using Assets.Flux.Actions;
 
-    public abstract class CardAction : Dispatchable {
-        protected CardAction(int id) {
+    public abstract class CardAction : UnpausableAction {
+        protected CardAction(Guid id) {
             Id = id;
         }
 
-        private int id;
+        private Guid id;
 
-        public int Id
+        private bool idSet;
+
+        public Guid Id
         {
             get
             {
-                _readyToGo.WaitOne();
+                if (!idSet) {
+                    _readyToGo.WaitOne();
+                }
                 return id;
             }
             private set
             {
-                id = value;
                 _readyToGo.Set();
+                idSet = true;
+                id = value;
             }
         }
     }

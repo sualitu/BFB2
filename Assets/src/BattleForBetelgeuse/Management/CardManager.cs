@@ -11,32 +11,30 @@
     using UnityEngine;
 
     public class CardManager : MonoBehaviour {
-        public static List<Tuple<Card, int>> CardsToCreate;
+        public static List<Guid> CardsToCreate;
 
         public GameObject CardPrefab;
 
         private void Awake() {
-            CardsToCreate = new List<Tuple<Card, int>>();
+            CardsToCreate = new List<Guid>();
         }
 
         private void Start() {
             HandManager.Init();
         }
 
-        public static int i;
-
         private void Update() {
             while(CardsToCreate.Count > 0) {
-                var card = CardsToCreate.GetAndRemoveRandom();
-                i = card.Second;
-               var view = new CardView(card.Second);
+                var cardId = CardsToCreate.GetAndRemoveRandom();
+                var card = CardStore.Instance.Cards[cardId];
+                var view = new CardView(cardId);
                 var cardObject = Instantiate(CardPrefab);
                 cardObject.transform.parent = transform;
                 var cardBehaviour = cardObject.GetComponent<CardBehaviour>() ?? cardObject.AddComponent<CardBehaviour>();
+                cardBehaviour.Id = cardId;
                 cardBehaviour.Companion = view;
-                cardBehaviour.Id = card.Second;
-                cardBehaviour.SetCard(card.First);
-                new CardCreatingAction(card.Second);
+                cardBehaviour.SetCard(card);
+                new CardCreatingAction(cardId);
             }
         }
     }

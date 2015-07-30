@@ -2,7 +2,7 @@
     using System;
 
     public class CardToHandAction : CardAction {
-        public CardToHandAction(int id)
+        public CardToHandAction(Guid id)
             : base(id) {
         }
     }

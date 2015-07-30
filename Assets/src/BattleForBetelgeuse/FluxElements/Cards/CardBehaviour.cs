@@ -1,5 +1,6 @@
 ﻿namespace Assets.BattleForBetelgeuse.FluxElements.Cards {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -10,7 +11,6 @@
     using Assets.BattleForBetelgeuse.FluxElements.Player;
     using Assets.BattleForBetelgeuse.Management;
     using Assets.Flux.Views;
-    using Assets.Utilities;
 
     using UnityEngine;
 
@@ -25,17 +25,9 @@
 
         private UILabel nameLabel;
 
-        private int pauseCounter;
 
-        public int Id { get; set; }
-
-        public static string i;
-
-        public static string j;
+        public Guid Id { get; set; }
         public override void PushUpdate() {
-
-            i = lastStatus.ToString();
-            j = Companion.Status.ToString();
             if (Companion.Status != lastStatus)
             {
                 lastStatus = Companion.Status;
@@ -58,10 +50,24 @@
                 case CardStatus.JustCreated:
                     AnimateFromCreationToHand();
                     break;
-                case CardStatus.Played:
-                    PlayCard();
+                case CardStatus.OnBoard:
+                    PutCardOnBoard();
+                    break;
+                case CardStatus.Removed:
+                    RemoveCard();
                     break;
             }
+        }
+
+        private void RemoveCard() {
+            TweenAlphaOfTextures(0);
+            holo.FadeOut(fadeOutDuration: .5f);
+            StartCoroutine(DestroyIn(1));
+        }
+
+        private IEnumerator DestroyIn(int i) {
+            yield return new WaitForSeconds(i);
+            Destroy(gameObject);
         }
 
         private void AnimateFromCreationToHand() {
@@ -156,14 +162,7 @@
         private void TweenAlphaOfTextures(float alpha) {
             TweenAlphaTo(frontTexture, alpha);
             TweenAlphaTo(backTexture, 0f);
-        }
-
-        private void Awake() {
-            BehaviourManager.Behaviours.Add(this);
-            nameLabel = GetComponentInChildren<UILabel>();
-            frontTexture = GetComponentsInChildren<UITexture>().First(component => component.tag == "CardFront");
-            backTexture = GetComponentsInChildren<UITexture>().First(component => component.tag == "CardBack");
-            holo = GetComponentInChildren<Holographs>();
+            TweenAlphaTo(nameLabel, alpha);
         }
 
         public void AnimateCreation() {
@@ -189,7 +188,17 @@
             }
         }
 
-        private void Start() {
+        protected override void CustomAwake()
+        {
+            nameLabel = GetComponentInChildren<UILabel>();
+            frontTexture = GetComponentsInChildren<UITexture>().First(component => component.tag == "CardFront");
+            backTexture = GetComponentsInChildren<UITexture>().First(component => component.tag == "CardBack");
+            holo = GetComponentInChildren<Holographs>();
+        }
+
+        private void Start()
+        {
+            BehaviourManager.Behaviours.Add(this);
             transform.localScale = new Vector3(Settings.Animations.Cards.CardSize,
                                                Settings.Animations.Cards.CardSize,
                                                Settings.Animations.Cards.CardSize);
@@ -208,7 +217,7 @@
         }
 
         private void OnHover(bool isHovedered) {
-            if (Companion.InHand && !Companion.PickedUp && !Companion.Played) {
+            if (Companion.InHand && !Companion.PickedUp && !Companion.OnBoard) {
                 if (isHovedered) {
                     SetHoloTexture();
                     TweenAlphaOfTextures(.9f);
@@ -238,7 +247,7 @@
 
         private void PickUp() {
             PauseInteraction(2);
-            new CardPickedUpdAction(Id);
+            new CardPickedUpAction(Id);
         }
 
         private void OnDragStart() {
@@ -250,6 +259,8 @@
         private void OnDragEnd() {
             PutDown(true);
         }
+
+        private int pauseCounter = 0;
 
         private void PauseInteraction(int i = 12) {
             pauseCounter = i;
@@ -265,9 +276,9 @@
                         PutDown();
                     }
                 }
-                if (Companion.Played) {
+                if (Companion.OnBoard) {
                     if (Input.GetMouseButtonUp(1)) {
-                        Unplay();
+                        TakeCardFromBoard();
                     }
                 }
             } else {
@@ -275,7 +286,7 @@
             }
         }
 
-        private void Unplay() {
+        private void TakeCardFromBoard() {
             PauseInteraction();
             TweenAlphaOfTextures(1f);
             holo.FadeOut(.5f);
@@ -284,11 +295,12 @@
             OnHover(false);
         }
 
-        private void PlayCard() {
+        private void PutCardOnBoard() {
             PauseInteraction();
             TweenAlphaOfTextures(.5f);
             holo.FadeIn(.5f);
             OnHover(false);
+            new CardOnBoardAction(Id);
         }
 
         private void TweenCardToMousePosition() {

@@ -48,11 +48,11 @@
             FadeOut(Settings.Animations.Cards.FadeInTime + .5f);
         }
 
-        public void FadeOut(float fadeOutDelay = 0f) {
+        public void FadeOut(float fadeOutDelay = 0f, float fadeOutDuration = 1.0f) {
             var paramOut = new Hashtable {
                 { "from", 1.0f },
                 { "to", 0.0f },
-                { "time", 1.0f },
+                { "time", fadeOutDuration},
                 { "onupdate", "UpdateFade" },
                 { "delay", fadeOutDelay }
             };

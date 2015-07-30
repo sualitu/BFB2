@@ -6,7 +6,6 @@
     using Assets.BattleForBetelgeuse.Management;
     using Assets.Flux.Actions;
     using Assets.Flux.Stores;
-    using Assets.Utilities;
 
     public class CardStore : PublishingStore<CardUpdate> {
         private static CardStore instance;
@@ -17,12 +16,18 @@
             { typeof(CardToHandAction), CardStatus.InHand },
             { typeof(CardHovederedAction), CardStatus.Hovered },
             { typeof(CardUnhovederedAction), CardStatus.Unhovered },
-            { typeof(CardPickedUpdAction), CardStatus.PickedUp }
+            { typeof(CardOnBoardAction), CardStatus.OnBoard },
+            { typeof(CardPickedUpAction), CardStatus.PickedUp },
+            { typeof(CardPlayedAction), CardStatus.Removed }
         };
+
+        public Dictionary<Guid, Card> Cards { get; private set; }
 
         private CardUpdate currentUpdate;
 
-        private CardStore() {}
+        private CardStore() {
+            Cards = new Dictionary<Guid, Card>();
+        }
 
         public static CardStore Instance {
             get {
@@ -33,22 +38,13 @@
             }
         }
 
-        public static int cardActions = 0;
-
-        public static int messagesSend = 0;
-
-        public static int somenewtotalffs = 0;
-
         public override void UpdateStore(Dispatchable action) {
             if (action is CardAction) {
-                if (action is CardCreatingAction) {
-                    cardActions++;
-                }
                 var cardAction = action as CardAction;
                 CardStatus status;
                 if (cardAction is CardPutDownAction) {
                     var cardPutDownAction = cardAction as CardPutDownAction;
-                    status = cardPutDownAction.LeftClick && cardPutDownAction.Position.y > Settings.Animations.Cards.CardDropZoneCutOff.y ? CardStatus.Played : CardStatus.InHand;
+                    status = IsPutDownOnBoard(cardPutDownAction) ? CardStatus.OnBoard : CardStatus.InHand;
                 } else {
                     status = StatusToActionMap[cardAction.GetType()];
                 }
@@ -57,28 +53,24 @@
             }
         }
 
-        public static int hufl = 0;
-
-        internal override void SendMessage(Message msg) {
-            if (currentUpdate.Status == CardStatus.Creating) {
-                messagesSend++;
-            }
-            msg(currentUpdate);
-            if (currentUpdate.Status == CardStatus.Creating)
-            {
-                hufl++;
-            }
+        public static bool IsPutDownOnBoard(CardPutDownAction cardPutDownAction) {
+            return cardPutDownAction.LeftClick
+                   && cardPutDownAction.Position.y > Settings.Animations.Cards.CardDropZoneCutOff.y;
         }
 
-        public void CardDrawn(int id, Card card) {
-            CardManager.CardsToCreate.Add(new Tuple<Card, int>(card, id));
+        internal override void SendMessage(Message msg) {
+            msg(currentUpdate);
+        }
+
+        public void CardDrawn(Guid id, Card card) {
+            Cards[id] = card;
+            CardManager.CardsToCreate.Add(id);
         }
     }
 
     public class CardUpdate {
         public CardStatus Status { get; set; }
-
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 
     public enum CardStatus {
@@ -92,7 +84,7 @@
 
         DiscardingFromHand,
 
-        Played,
+        OnBoard,
 
         Unknown,
 
@@ -100,6 +92,8 @@
 
         Unhovered,
 
-        PickedUp
+        PickedUp,
+
+        Removed
     }
 }

@@ -5,6 +5,7 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Combat {
     using Assets.BattleForBetelgeuse.FluxElements.Unit;
     using Assets.Flux.Actions;
     using Assets.Flux.Stores;
+    using Assets.Utilities;
 
     public class CombatStore : PublishingStore<CombatLog> {
         private static CombatStore instance;
@@ -55,13 +56,16 @@ namespace Assets.BattleForBetelgeuse.FluxElements.Combat {
             }
         }
 
-        internal override void Publish() {
+        internal override void Publish()
+        {
+            Logger.Log("Sending " + Messages.Count);
             base.Publish();
             position++;
         }
 
         internal override void SendMessage(Message msg) {
             msg(new CombatLog(events.ToArray(), position));
+            Logger.Log("Sent");
         }
     }
 }

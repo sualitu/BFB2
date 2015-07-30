@@ -8,7 +8,7 @@
     public class LocalPlayer : Player {
 
         public List<Card> Deck { get; set; }
-        public List<int> Hand{ get; set; }
+        public List<Guid> Hand { get; set; }
 
         public override int DeckCount {
             get {

@@ -1,17 +1,25 @@
 namespace Assets.Flux.Stores {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public abstract class Publisher<TTopic> {
         public delegate void Message(TTopic Input);
 
-        internal List<Message> messages = new List<Message>();
+        internal Dictionary<Guid, Message> Messages = new Dictionary<Guid, Message>();
 
-        public void Subscribe(Message msg) {
-            messages.Add(msg);
+        public void Subscribe(Guid guid, Message msg) {
+            //Logger.Log(guid.ToString());
+            //Logger.Log(msg.Method.Name);
+            Messages[guid] = msg;
         }
-        
+
+        public void Unsubscribe(Guid guid) {
+            Messages.Remove(guid);
+        }
+
         internal virtual void Publish() {
-            messages.ForEach(SendMessage);
+            Messages.Values.ToList().ForEach(SendMessage);
         }
 
         internal abstract void SendMessage(Message msg);

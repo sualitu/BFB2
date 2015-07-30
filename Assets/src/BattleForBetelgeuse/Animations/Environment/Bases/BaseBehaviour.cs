@@ -14,11 +14,11 @@
         private void Start()
         {
             BehaviourManager.Behaviours.Add(this);
-            gameObject.name = "Unit:" + UniqueId();
+            gameObject.name = "Base:" + UniqueId();
             gameObject.tag = "Unit";
             Companion = new BaseView();
         }
-
+        
         public override void PushUpdate() {
             DoSpawnAnimation();
         }

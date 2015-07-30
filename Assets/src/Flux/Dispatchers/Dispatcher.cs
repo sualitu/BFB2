@@ -4,10 +4,10 @@
     using System.Linq;
     using System.Threading;
 
-    using Assets.BattleForBetelgeuse.FluxElements.Cards;
     using Assets.Flux.Actions;
     using Assets.Flux.Actions.DispatcherActions;
     using Assets.Flux.Stores;
+    using Assets.Utilities;
 
     public class Dispatcher {
         private static Dispatcher instance;
@@ -78,11 +78,13 @@
         }
 
         private void ThrottleActions(Dispatchable action) {
-            if (ThrottledAction.IsThrottled(action)) {
+            if (ThrottledAction.IsThrottled(action))
+            {
                 var actionsCopy = new Dispatchable[actions.Count];
                 actions.CopyTo(actionsCopy);
                 foreach (var a in actionsCopy) {
-                    if (!ReferenceEquals(a, action) && ThrottledAction.IsThrottled(a)) {
+                    if (!ReferenceEquals(a, action) && ThrottledAction.IsThrottled(a))
+                    {
                         delayedActions.Add(a);
                         actions.Remove(a);
                     }
@@ -94,7 +96,6 @@
             while (actions.Count > 0) {
                 var action = actions.First();
                 actions.Remove(action);
-
                 try {
                     ThrottleActions(action);
 
